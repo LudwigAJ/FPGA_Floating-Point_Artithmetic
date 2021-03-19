@@ -1,26 +1,28 @@
 module cordic(
     clk,
     reset, //active-high
-    start, //high to begin calc
+	 start, //high at begg
     angle,
-    cos_out,
-	 state
+    cos_out
 );
 
 input clk, reset, start;
 input [31:0] angle;
 output [31:0] cos_out;
-output state;
 
 reg state, state_next;
 reg [3:0] i, i_next;  //iterator
 reg [31:0] e_i, x, y, z, x_next, y_next, z_next; //angle of iteration plus others...
 
-wire [31:0] cos_out = x;
+wire [31:0] cos_out;
+wire d;
+wire [31:0] x_shifted;
+wire [31:0] y_shifted;
 
-wire d = angle[31];
-wire [31:0] x_shifted = x << i;
-wire [31:0] y_shifted = y << i;
+assign cos_out = x;
+assign d = z[31];
+assign x_shifted = x >> i;
+assign y_shifted = y >> i;
 
 always @(i) begin //angle to be used in calc
     case(i)
@@ -44,34 +46,40 @@ always @(i) begin //angle to be used in calc
 end
 
 always@(posedge clk) begin
-    if (reset | start) begin
+    if (start) begin   //initial values
         i <= 4'd0;
         x <= 32'h26dd3b6a;
         y <= 32'd0;
         z <= angle;
         state <= 1'b1;
     end
-    else begin
+	 else if (reset) begin
+        i <= 4'd0;
+        x <= 32'h26dd3b6a;
+        y <= 32'd0;
+		  z <= angle;
+	 end
+    else begin        //updateing values
         x <= x_next;
         y <= y_next;
         z <= z_next;
+		  i <= i_next;
         state <= state_next;
     end
 end
 
 always @* begin
-    x_next = x;
-    y_next = y;
-    z_next = z;
-    i_next = i;
-    state_next = state;
-    if(state)begin
+	 x_next = x;
+	 y_next = y;
+	 z_next = z;
+	 i_next = i;
+	 state_next = state;
+    if(state)begin  //calculating section
         x_next = x + (d ? y_shifted : -y_shifted);
         y_next = y + (d ? -x_shifted : x_shifted);
         z_next = z + (d ? e_i : -e_i);
         i_next = i + 1;
-
-        if(i == 4'd15) begin
+        if(i == 4'd15) begin   //done 16 iterations
             state_next = 1'b0; 
         end
     end

@@ -7,7 +7,6 @@ module tb ();
 
 	//Output(s)
 	wire [31:0] cos_out;
-	wire state;
 
 	//module testing
 	cordic unit(
@@ -15,8 +14,7 @@ module tb ();
 		.reset(reset), 
 		.start(start),
 		.angle(angle),
-		.cos_out(cos_out),
-		.state(state)
+		.cos_out(cos_out)
 	);
 
 
@@ -38,9 +36,9 @@ module tb ();
 		#19
 		start = 1'b1;
 		angle <= 32'h20000000;
-		#5
+		#2
 		start = 1'b0;
-		#800
+		#798
 			
 		$stop; //end of sim
 	end

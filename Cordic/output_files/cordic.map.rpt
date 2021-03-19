@@ -1,5 +1,5 @@
 Analysis & Synthesis report for cordic
-Fri Mar 19 20:49:10 2021
+Fri Mar 19 22:22:55 2021
 Quartus Prime Version 20.1.1 Build 720 11/11/2020 SJ Lite Edition
 
 
@@ -13,8 +13,8 @@ Quartus Prime Version 20.1.1 Build 720 11/11/2020 SJ Lite Edition
   5. Analysis & Synthesis Source Files Read
   6. Analysis & Synthesis Resource Usage Summary
   7. Analysis & Synthesis Resource Utilization by Entity
-  8. Registers Removed During Synthesis
-  9. General Register Statistics
+  8. General Register Statistics
+  9. Multiplexer Restructuring Statistics (Restructuring Performed)
  10. Post-Synthesis Netlist Statistics for Top Partition
  11. Elapsed Time Per Partition
  12. Analysis & Synthesis Messages
@@ -44,14 +44,14 @@ https://fpgasoftware.intel.com/eula.
 +-------------------------------------------------------------------------------+
 ; Analysis & Synthesis Summary                                                  ;
 +---------------------------------+---------------------------------------------+
-; Analysis & Synthesis Status     ; Successful - Fri Mar 19 20:49:10 2021       ;
+; Analysis & Synthesis Status     ; Successful - Fri Mar 19 22:22:55 2021       ;
 ; Quartus Prime Version           ; 20.1.1 Build 720 11/11/2020 SJ Lite Edition ;
 ; Revision Name                   ; cordic                                      ;
 ; Top-level Entity Name           ; cordic                                      ;
 ; Family                          ; Cyclone V                                   ;
 ; Logic utilization (in ALMs)     ; N/A                                         ;
-; Total registers                 ; 64                                          ;
-; Total pins                      ; 68                                          ;
+; Total registers                 ; 101                                         ;
+; Total pins                      ; 67                                          ;
 ; Total virtual pins              ; 0                                           ;
 ; Total block memory bits         ; 0                                           ;
 ; Total DSP Blocks                ; 0                                           ;
@@ -168,40 +168,40 @@ https://fpgasoftware.intel.com/eula.
 +----------------------------+-------------+
 
 
-+--------------------------------------------------------------------------------------------------------------------------+
-; Analysis & Synthesis Source Files Read                                                                                   ;
-+----------------------------------+-----------------+------------------------+----------------------------------+---------+
-; File Name with User-Entered Path ; Used in Netlist ; File Type              ; File Name with Absolute Path     ; Library ;
-+----------------------------------+-----------------+------------------------+----------------------------------+---------+
-; cordic.v                         ; yes             ; User Verilog HDL File  ; /home/e2/Desktop/cordic/cordic.v ;         ;
-+----------------------------------+-----------------+------------------------+----------------------------------+---------+
++--------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Source Files Read                                                                                                                 ;
++----------------------------------+-----------------+------------------------+----------------------------------------------------------------+---------+
+; File Name with User-Entered Path ; Used in Netlist ; File Type              ; File Name with Absolute Path                                   ; Library ;
++----------------------------------+-----------------+------------------------+----------------------------------------------------------------+---------+
+; cordic.v                         ; yes             ; User Verilog HDL File  ; /home/e2/Desktop/FPGA-FloatingPointArtithmetic/Cordic/cordic.v ;         ;
++----------------------------------+-----------------+------------------------+----------------------------------------------------------------+---------+
 
 
-+---------------------------------------------------------------+
-; Analysis & Synthesis Resource Usage Summary                   ;
-+---------------------------------------------+-----------------+
-; Resource                                    ; Usage           ;
-+---------------------------------------------+-----------------+
-; Estimate of Logic utilization (ALMs needed) ; 43              ;
-;                                             ;                 ;
-; Combinational ALUT usage for logic          ; 85              ;
-;     -- 7 input functions                    ; 0               ;
-;     -- 6 input functions                    ; 0               ;
-;     -- 5 input functions                    ; 0               ;
-;     -- 4 input functions                    ; 0               ;
-;     -- <=3 input functions                  ; 85              ;
-;                                             ;                 ;
-; Dedicated logic registers                   ; 64              ;
-;                                             ;                 ;
-; I/O pins                                    ; 68              ;
-;                                             ;                 ;
-; Total DSP Blocks                            ; 0               ;
-;                                             ;                 ;
-; Maximum fan-out node                        ; angle[31]~input ;
-; Maximum fan-out                             ; 66              ;
-; Total fan-out                               ; 570             ;
-; Average fan-out                             ; 2.00            ;
-+---------------------------------------------+-----------------+
++---------------------------------------------------------+
+; Analysis & Synthesis Resource Usage Summary             ;
++---------------------------------------------+-----------+
+; Resource                                    ; Usage     ;
++---------------------------------------------+-----------+
+; Estimate of Logic utilization (ALMs needed) ; 186       ;
+;                                             ;           ;
+; Combinational ALUT usage for logic          ; 273       ;
+;     -- 7 input functions                    ; 0         ;
+;     -- 6 input functions                    ; 99        ;
+;     -- 5 input functions                    ; 19        ;
+;     -- 4 input functions                    ; 37        ;
+;     -- <=3 input functions                  ; 118       ;
+;                                             ;           ;
+; Dedicated logic registers                   ; 101       ;
+;                                             ;           ;
+; I/O pins                                    ; 67        ;
+;                                             ;           ;
+; Total DSP Blocks                            ; 0         ;
+;                                             ;           ;
+; Maximum fan-out node                        ; clk~input ;
+; Maximum fan-out                             ; 101       ;
+; Total fan-out                               ; 1785      ;
+; Average fan-out                             ; 3.51      ;
++---------------------------------------------+-----------+
 
 
 +----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -209,20 +209,9 @@ https://fpgasoftware.intel.com/eula.
 +----------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+---------------------+-------------+--------------+
 ; Compilation Hierarchy Node ; Combinational ALUTs ; Dedicated Logic Registers ; Block Memory Bits ; DSP Blocks ; Pins ; Virtual Pins ; Full Hierarchy Name ; Entity Name ; Library Name ;
 +----------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+---------------------+-------------+--------------+
-; |cordic                    ; 85 (85)             ; 64 (64)                   ; 0                 ; 0          ; 68   ; 0            ; |cordic             ; cordic      ; work         ;
+; |cordic                    ; 273 (273)           ; 101 (101)                 ; 0                 ; 0          ; 67   ; 0            ; |cordic             ; cordic      ; work         ;
 +----------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+---------------------+-------------+--------------+
 Note: For table entries with two numbers listed, the numbers in parentheses indicate the number of resources of the given type used by the specific entity alone. The numbers listed outside of parentheses indicate the total resources of the given type used by the specific entity and all of its sub-entities in the hierarchy.
-
-
-+--------------------------------------------------------------------------------+
-; Registers Removed During Synthesis                                             ;
-+---------------------------------------+----------------------------------------+
-; Register name                         ; Reason for Removal                     ;
-+---------------------------------------+----------------------------------------+
-; i[0..3]                               ; Stuck at GND due to stuck port data_in ;
-; state~reg0                            ; Stuck at VCC due to stuck port data_in ;
-; Total Number of Removed Registers = 5 ;                                        ;
-+---------------------------------------+----------------------------------------+
 
 
 +------------------------------------------------------+
@@ -230,14 +219,33 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 +----------------------------------------------+-------+
 ; Statistic                                    ; Value ;
 +----------------------------------------------+-------+
-; Total registers                              ; 64    ;
-; Number of registers using Synchronous Clear  ; 46    ;
-; Number of registers using Synchronous Load   ; 0     ;
+; Total registers                              ; 101   ;
+; Number of registers using Synchronous Clear  ; 50    ;
+; Number of registers using Synchronous Load   ; 32    ;
 ; Number of registers using Asynchronous Clear ; 0     ;
 ; Number of registers using Asynchronous Load  ; 0     ;
-; Number of registers using Clock Enable       ; 0     ;
+; Number of registers using Clock Enable       ; 96    ;
 ; Number of registers using Preset             ; 0     ;
 +----------------------------------------------+-------+
+
+
++------------------------------------------------------------------------------------------------------------------------------------------+
+; Multiplexer Restructuring Statistics (Restructuring Performed)                                                                           ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+----------------------------+
+; Multiplexer Inputs ; Bus Width ; Baseline Area ; Area if Restructured ; Saving if Restructured ; Registered ; Example Multiplexer Output ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+----------------------------+
+; 3:1                ; 32 bits   ; 64 LEs        ; 0 LEs                ; 64 LEs                 ; Yes        ; |cordic|z[21]              ;
+; 3:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; Yes        ; |cordic|i[2]               ;
+; 4:1                ; 18 bits   ; 36 LEs        ; 36 LEs               ; 0 LEs                  ; Yes        ; |cordic|x[19]              ;
+; 4:1                ; 46 bits   ; 92 LEs        ; 0 LEs                ; 92 LEs                 ; Yes        ; |cordic|y[7]               ;
+; 4:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |cordic|ShiftRight1        ;
+; 4:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |cordic|ShiftRight0        ;
+; 4:1                ; 50 bits   ; 100 LEs       ; 100 LEs              ; 0 LEs                  ; No         ; |cordic|ShiftRight1        ;
+; 4:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; No         ; |cordic|ShiftRight0        ;
+; 4:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; No         ; |cordic|ShiftRight0        ;
+; 4:1                ; 32 bits   ; 64 LEs        ; 64 LEs               ; 0 LEs                  ; No         ; |cordic|ShiftRight1        ;
+; 7:1                ; 8 bits    ; 32 LEs        ; 32 LEs               ; 0 LEs                  ; No         ; |cordic|ShiftRight1        ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+----------------------------+
 
 
 +-----------------------------------------------------+
@@ -245,20 +253,29 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 +-----------------------+-----------------------------+
 ; Type                  ; Count                       ;
 +-----------------------+-----------------------------+
-; arriav_ff             ; 64                          ;
-;     SCLR              ; 46                          ;
-;     plain             ; 18                          ;
-; arriav_lcell_comb     ; 86                          ;
-;     arith             ; 66                          ;
-;         1 data inputs ; 2                           ;
-;         3 data inputs ; 64                          ;
-;     normal            ; 20                          ;
-;         0 data inputs ; 1                           ;
-;         2 data inputs ; 19                          ;
-; boundary_port         ; 68                          ;
+; arriav_ff             ; 101                         ;
+;     ENA               ; 18                          ;
+;     ENA SCLR          ; 46                          ;
+;     ENA SLD           ; 32                          ;
+;     SCLR              ; 4                           ;
+;     plain             ; 1                           ;
+; arriav_lcell_comb     ; 273                         ;
+;     arith             ; 99                          ;
+;         1 data inputs ; 4                           ;
+;         2 data inputs ; 1                           ;
+;         3 data inputs ; 78                          ;
+;         4 data inputs ; 8                           ;
+;         5 data inputs ; 8                           ;
+;     normal            ; 174                         ;
+;         2 data inputs ; 4                           ;
+;         3 data inputs ; 31                          ;
+;         4 data inputs ; 29                          ;
+;         5 data inputs ; 11                          ;
+;         6 data inputs ; 99                          ;
+; boundary_port         ; 67                          ;
 ;                       ;                             ;
-; Max LUT depth         ; 5.00                        ;
-; Average LUT depth     ; 3.55                        ;
+; Max LUT depth         ; 6.90                        ;
+; Average LUT depth     ; 4.73                        ;
 +-----------------------+-----------------------------+
 
 
@@ -277,62 +294,27 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 Info: *******************************************************************
 Info: Running Quartus Prime Analysis & Synthesis
     Info: Version 20.1.1 Build 720 11/11/2020 SJ Lite Edition
-    Info: Processing started: Fri Mar 19 20:49:02 2021
+    Info: Processing started: Fri Mar 19 22:22:46 2021
 Info: Command: quartus_map --read_settings_files=on --write_settings_files=off cordic -c cordic
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
 Info (20030): Parallel compilation is enabled and will use 6 of the 6 processors detected
 Info (12021): Found 1 design units, including 1 entities, in source file testbench_cordic.v
-    Info (12023): Found entity 1: tb File: /home/e2/Desktop/cordic/testbench_cordic.v Line: 2
+    Info (12023): Found entity 1: tb File: /home/e2/Desktop/FPGA-FloatingPointArtithmetic/Cordic/testbench_cordic.v Line: 2
 Info (12021): Found 1 design units, including 1 entities, in source file cordic.v
-    Info (12023): Found entity 1: cordic File: /home/e2/Desktop/cordic/cordic.v Line: 1
+    Info (12023): Found entity 1: cordic File: /home/e2/Desktop/FPGA-FloatingPointArtithmetic/Cordic/cordic.v Line: 1
 Info (12127): Elaborating entity "cordic" for the top level hierarchy
-Warning (10036): Verilog HDL or VHDL warning at cordic.v(16): object "i_next" assigned a value but never read File: /home/e2/Desktop/cordic/cordic.v Line: 16
-Warning (10230): Verilog HDL assignment warning at cordic.v(72): truncated value with size 32 to match size of target (4) File: /home/e2/Desktop/cordic/cordic.v Line: 72
-Warning (13024): Output pins are stuck at VCC or GND
-    Warning (13410): Pin "state" is stuck at VCC File: /home/e2/Desktop/cordic/cordic.v Line: 13
+Warning (10230): Verilog HDL assignment warning at cordic.v(81): truncated value with size 32 to match size of target (4) File: /home/e2/Desktop/FPGA-FloatingPointArtithmetic/Cordic/cordic.v Line: 81
 Info (286030): Timing-Driven Synthesis is running
 Info (16010): Generating hard_block partition "hard_block:auto_generated_inst"
     Info (16011): Adding 0 node(s), including 0 DDIO, 0 PLL, 0 transceiver and 0 LCELL
-Warning (21074): Design contains 31 input pin(s) that do not drive logic
-    Warning (15610): No output dependent on input pin "angle[0]" File: /home/e2/Desktop/cordic/cordic.v Line: 11
-    Warning (15610): No output dependent on input pin "angle[1]" File: /home/e2/Desktop/cordic/cordic.v Line: 11
-    Warning (15610): No output dependent on input pin "angle[2]" File: /home/e2/Desktop/cordic/cordic.v Line: 11
-    Warning (15610): No output dependent on input pin "angle[3]" File: /home/e2/Desktop/cordic/cordic.v Line: 11
-    Warning (15610): No output dependent on input pin "angle[4]" File: /home/e2/Desktop/cordic/cordic.v Line: 11
-    Warning (15610): No output dependent on input pin "angle[5]" File: /home/e2/Desktop/cordic/cordic.v Line: 11
-    Warning (15610): No output dependent on input pin "angle[6]" File: /home/e2/Desktop/cordic/cordic.v Line: 11
-    Warning (15610): No output dependent on input pin "angle[7]" File: /home/e2/Desktop/cordic/cordic.v Line: 11
-    Warning (15610): No output dependent on input pin "angle[8]" File: /home/e2/Desktop/cordic/cordic.v Line: 11
-    Warning (15610): No output dependent on input pin "angle[9]" File: /home/e2/Desktop/cordic/cordic.v Line: 11
-    Warning (15610): No output dependent on input pin "angle[10]" File: /home/e2/Desktop/cordic/cordic.v Line: 11
-    Warning (15610): No output dependent on input pin "angle[11]" File: /home/e2/Desktop/cordic/cordic.v Line: 11
-    Warning (15610): No output dependent on input pin "angle[12]" File: /home/e2/Desktop/cordic/cordic.v Line: 11
-    Warning (15610): No output dependent on input pin "angle[13]" File: /home/e2/Desktop/cordic/cordic.v Line: 11
-    Warning (15610): No output dependent on input pin "angle[14]" File: /home/e2/Desktop/cordic/cordic.v Line: 11
-    Warning (15610): No output dependent on input pin "angle[15]" File: /home/e2/Desktop/cordic/cordic.v Line: 11
-    Warning (15610): No output dependent on input pin "angle[16]" File: /home/e2/Desktop/cordic/cordic.v Line: 11
-    Warning (15610): No output dependent on input pin "angle[17]" File: /home/e2/Desktop/cordic/cordic.v Line: 11
-    Warning (15610): No output dependent on input pin "angle[18]" File: /home/e2/Desktop/cordic/cordic.v Line: 11
-    Warning (15610): No output dependent on input pin "angle[19]" File: /home/e2/Desktop/cordic/cordic.v Line: 11
-    Warning (15610): No output dependent on input pin "angle[20]" File: /home/e2/Desktop/cordic/cordic.v Line: 11
-    Warning (15610): No output dependent on input pin "angle[21]" File: /home/e2/Desktop/cordic/cordic.v Line: 11
-    Warning (15610): No output dependent on input pin "angle[22]" File: /home/e2/Desktop/cordic/cordic.v Line: 11
-    Warning (15610): No output dependent on input pin "angle[23]" File: /home/e2/Desktop/cordic/cordic.v Line: 11
-    Warning (15610): No output dependent on input pin "angle[24]" File: /home/e2/Desktop/cordic/cordic.v Line: 11
-    Warning (15610): No output dependent on input pin "angle[25]" File: /home/e2/Desktop/cordic/cordic.v Line: 11
-    Warning (15610): No output dependent on input pin "angle[26]" File: /home/e2/Desktop/cordic/cordic.v Line: 11
-    Warning (15610): No output dependent on input pin "angle[27]" File: /home/e2/Desktop/cordic/cordic.v Line: 11
-    Warning (15610): No output dependent on input pin "angle[28]" File: /home/e2/Desktop/cordic/cordic.v Line: 11
-    Warning (15610): No output dependent on input pin "angle[29]" File: /home/e2/Desktop/cordic/cordic.v Line: 11
-    Warning (15610): No output dependent on input pin "angle[30]" File: /home/e2/Desktop/cordic/cordic.v Line: 11
-Info (21057): Implemented 153 device resources after synthesis - the final resource count might be different
+Info (21057): Implemented 340 device resources after synthesis - the final resource count might be different
     Info (21058): Implemented 35 input pins
-    Info (21059): Implemented 33 output pins
-    Info (21061): Implemented 85 logic cells
-Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 37 warnings
-    Info: Peak virtual memory: 513 megabytes
-    Info: Processing ended: Fri Mar 19 20:49:10 2021
-    Info: Elapsed time: 00:00:08
-    Info: Total CPU time (on all processors): 00:00:16
+    Info (21059): Implemented 32 output pins
+    Info (21061): Implemented 273 logic cells
+Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 2 warnings
+    Info: Peak virtual memory: 521 megabytes
+    Info: Processing ended: Fri Mar 19 22:22:55 2021
+    Info: Elapsed time: 00:00:09
+    Info: Total CPU time (on all processors): 00:00:17
 
 

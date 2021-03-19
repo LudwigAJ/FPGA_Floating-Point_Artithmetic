@@ -9,35 +9,33 @@
 # Copying /home/e2/intelFPGA_lite/20.1/modelsim_ase/linuxaloem/../modelsim.ini to modelsim.ini
 # Modifying modelsim.ini
 # 
-# vlog -vlog01compat -work work +incdir+/home/e2/Desktop/cordic {/home/e2/Desktop/cordic/cordic.v}
+# vlog -vlog01compat -work work +incdir+/home/e2/Desktop/FPGA-FloatingPointArtithmetic/Cordic {/home/e2/Desktop/FPGA-FloatingPointArtithmetic/Cordic/cordic.v}
 # Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 19:40:05 on Mar 19,2021
-# vlog -reportprogress 300 -vlog01compat -work work "+incdir+/home/e2/Desktop/cordic" /home/e2/Desktop/cordic/cordic.v 
+# Start time: 22:27:04 on Mar 19,2021
+# vlog -reportprogress 300 -vlog01compat -work work "+incdir+/home/e2/Desktop/FPGA-FloatingPointArtithmetic/Cordic" /home/e2/Desktop/FPGA-FloatingPointArtithmetic/Cordic/cordic.v 
 # -- Compiling module cordic
 # 
 # Top level modules:
 # 	cordic
-# End time: 19:40:05 on Mar 19,2021, Elapsed time: 0:00:00
+# End time: 22:27:04 on Mar 19,2021, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # 
-# vlog -vlog01compat -work work +incdir+/home/e2/Desktop/cordic {/home/e2/Desktop/cordic/testbench_cordic.v}
+# vlog -vlog01compat -work work +incdir+/home/e2/Desktop/FPGA-FloatingPointArtithmetic/Cordic {/home/e2/Desktop/FPGA-FloatingPointArtithmetic/Cordic/testbench_cordic.v}
 # Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 19:40:05 on Mar 19,2021
-# vlog -reportprogress 300 -vlog01compat -work work "+incdir+/home/e2/Desktop/cordic" /home/e2/Desktop/cordic/testbench_cordic.v 
+# Start time: 22:27:04 on Mar 19,2021
+# vlog -reportprogress 300 -vlog01compat -work work "+incdir+/home/e2/Desktop/FPGA-FloatingPointArtithmetic/Cordic" /home/e2/Desktop/FPGA-FloatingPointArtithmetic/Cordic/testbench_cordic.v 
 # -- Compiling module tb
 # 
 # Top level modules:
 # 	tb
-# End time: 19:40:05 on Mar 19,2021, Elapsed time: 0:00:00
+# End time: 22:27:04 on Mar 19,2021, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # 
 # vsim -t 1ps -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L cyclonev_ver -L cyclonev_hssi_ver -L cyclonev_pcie_hip_ver -L rtl_work -L work -voptargs="+acc"  tb
 # vsim -t 1ps -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L cyclonev_ver -L cyclonev_hssi_ver -L cyclonev_pcie_hip_ver -L rtl_work -L work -voptargs=""+acc"" tb 
-# Start time: 19:40:05 on Mar 19,2021
+# Start time: 22:27:04 on Mar 19,2021
 # Loading work.tb
 # Loading work.cordic
-# ** Warning: (vsim-2685) [TFMPC] - Too few port connections for 'unit'.  Expected 6, found 5.
-#    Time: 0 ps  Iteration: 0  Instance: /tb/unit File: /home/e2/Desktop/cordic/testbench_cordic.v Line: 12
 # 
 # add wave *
 # view structure
@@ -46,9 +44,9 @@
 # .main_pane.objects.interior.cs.body.tree
 # run -all
 #                    04 << Starting Simulation >> 
-# ** Note: $stop    : /home/e2/Desktop/cordic/testbench_cordic.v(43)
-#    Time: 844 ns  Iteration: 0  Instance: /tb
-# Break in Module tb at /home/e2/Desktop/cordic/testbench_cordic.v line 43
+# ** Note: $stop    : /home/e2/Desktop/FPGA-FloatingPointArtithmetic/Cordic/testbench_cordic.v(43)
+#    Time: 839 ns  Iteration: 0  Instance: /tb
+# Break in Module tb at /home/e2/Desktop/FPGA-FloatingPointArtithmetic/Cordic/testbench_cordic.v line 43
 # couldn't load file "/home/e2/intelFPGA_lite/20.1/modelsim_ase/linux/ScintillaTk/libScintillaTk1.14.so": libstdc++.so.6: wrong ELF class: ELFCLASS64
 # ** Error: list element in quotes followed by ":" instead of space
 # Error in macro ./cordic_run_msim_rtl_verilog.do line 17
@@ -64,5 +62,6 @@
 #     (procedure "run" line 107)
 #     invoked from within
 # "run -all"
-# End time: 20:55:41 on Mar 19,2021, Elapsed time: 1:15:36
-# Errors: 1, Warnings: 1
+# couldn't load file "/home/e2/intelFPGA_lite/20.1/modelsim_ase/linuxaloem/nlviewST.so": libstdc++.so.6: wrong ELF class: ELFCLASS64
+# End time: 22:41:19 on Mar 19,2021, Elapsed time: 0:14:15
+# Errors: 1, Warnings: 0
