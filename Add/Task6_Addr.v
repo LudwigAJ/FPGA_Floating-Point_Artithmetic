@@ -109,6 +109,7 @@ module Task6_Addr(
 				counter = 5'b0;
 				tmp_mant_done = tmp_mant_done >> 1;
 				tmp_mant_done[23] = 1'b1;
+				// Also remember to add one to exponent here. Forgot before. Do same in Sub :)
 			end
 			else begin
 				counter = 5'b0;
