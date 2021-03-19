@@ -1,0 +1,77 @@
+`timescale 1 ns / 100 ps
+module tb ();
+
+	//Inputs
+	reg [31:0] dataa;
+	reg [31:0] datab;
+	reg clk;
+
+	//Output(s)
+	wire [31:0] result;
+
+	//module testing
+	add_fp unit(
+		.clk(clk),
+		.a(dataa),
+		.b(datab), 
+		.q(result)
+	);
+
+
+	//Create a 50MHz clock
+	always
+		#10 clk = ~clk;
+
+	//main testing
+	initial
+	begin
+	
+		$display($time, "4 << Starting Simulation >> ");
+	
+		clk = 1'b1;
+		
+		@(posedge clk);
+		
+		#19
+		dataa <= 32'b0; //0
+		datab <= 32'b0; //0
+		#20
+		
+		if(result != 0)
+			$display($time, "Fuck you, failed test 0");
+			
+			
+		dataa <= 32'b00111111100000000000000000000000; //1
+		datab <= 32'b01000000000000000000000000000000; //2
+		#20
+		
+//		if(result != 32'b01000000010000000000000000000000)
+//			$display($time, "Fuck you, failed test 1");
+			
+		dataa <= 32'b01000011101001100000000000000000; //332
+		datab <= 32'b01000001101100000000000000000000; //2
+		#20 
+		
+//		if(result != 32'b01000011101100010000000000000000)
+//			$display($time, "Fuck you, failed test 3");
+		
+
+		dataa <= 32'b01000000001000000000000000000000; //2.5
+		datab <= 32'b00111111000000000000000000000000; //0.5
+		#20
+		
+//		if(result != 32'b01000000010000000000000000000000)
+//			$display($time, "Fuck you, failed test 4");
+			
+
+		dataa <= 32'b11000000001000000000000000000000; //-2.5
+		datab <= 32'b00111111000000000000000000000000; //0.5
+		#31
+		
+//		if(result != 32'b11000000000000000000000000000000)
+//			$display($time, "Fuck you, failed test 5");	
+			
+		$stop; //end of sim
+	end
+
+endmodule
