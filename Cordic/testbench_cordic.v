@@ -9,7 +9,7 @@ module tb ();
 	wire [31:0] cos_out;
 
 	//module testing
-	cordic unit(
+	cordic_unrolled unit(
 		.clk(clk),
 		.reset(reset), 
 		.start(start),
@@ -35,10 +35,28 @@ module tb ();
 		
 		#19
 		start = 1'b1;
-		angle <= 32'h20000000;
+		angle <= 32'h20000000; //0.5
 		#2
 		start = 1'b0;
-		#798
+		#18
+		
+		start = 1'b1;
+		angle <= 32'h80000000;  //-1
+		#2
+		start = 1'b0;
+		#18
+		
+		start = 1'b1;
+		angle <= 32'h60000000;  //1
+		#2
+		start = 1'b0;
+		#18
+		
+		start = 1'b1;
+		angle <= 32'h00000000;  //0
+		#2
+		start = 1'b0;
+		#18
 			
 		$stop; //end of sim
 	end
