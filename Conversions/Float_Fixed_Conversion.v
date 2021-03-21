@@ -26,7 +26,7 @@ module float_to_fixed(
         full_mant = {1'b1, mant_float};
         sign_fixed = sign_float;
 
-        if (exp_float == 8'b0 || exp_floats > 8'd127) begin
+        if (exp_float == 8'b0 || exp_float > 8'd127) begin
             result = 22'b0;
         end
         else begin
