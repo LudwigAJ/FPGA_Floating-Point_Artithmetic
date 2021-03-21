@@ -30,6 +30,7 @@ module fixed_to_float(
             sign_float = sign_fixed;
             exp_float = 8'd127; // i.e. set to 0 + bias = 127.
             mant_float[23:3] = fixed_val[20:0];
+				mant_float[2:0] = 3'b0;
 
             counter = 5'b0;
 
@@ -38,7 +39,7 @@ module fixed_to_float(
                 counter = counter + 1'b1;
             end
             exp_float = exp_float - counter;
-            result = {sign_float, exp_float, mant_float}
+            result = {sign_float, exp_float, mant_float[22:0]};
         end
     end
 
