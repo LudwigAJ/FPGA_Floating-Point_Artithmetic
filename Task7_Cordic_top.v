@@ -72,7 +72,7 @@ module Task_7_top(
 
     reg geoff_reset = 1'b0;
     reg geoff_start = 1'b1;
-    reg geoff_done = 1'b0;
+    wire geoff_done;
 
     
     cordic geoff(
