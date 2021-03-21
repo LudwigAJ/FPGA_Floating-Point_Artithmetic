@@ -3,7 +3,9 @@
 // x^2 : SECOND
 // x - 128 : THIRD
 // THIRD/128 : FOURTH
+// FLOAT TO FIXED : FOURTHFIXED
 // COS(FOURTH) : FIFTH
+// FIXED TO FLOAT : FIFTHFLOAT
 // SECOND * FIFTH : SIXTH
 // FIRST + SIXTH : SEVENTH
 // 4 MULT, 1 ADD, 1 SUB, 1 CORDIC 
@@ -31,7 +33,9 @@ module Task_7_top(
     wire [31:0] result_second;
     wire [31:0] result_third;
     wire [31:0] result_fourth;
+    wire [21:0] result_fourth_fixed;
     wire [31:0] result_fifth;
+    wire [21:0] result_fifth_fixed;
     wire [31:0] result_sixth;
     wire [31:0] result_seventh;
 
@@ -55,29 +59,51 @@ module Task_7_top(
         .clk(clk)
         );
     Task6_Mult third_mult(
-        .dataa(),
-        .datab(),
-        .result(),
+        .dataa(result_third),
+        .datab(one_over_one_twenty_eight),
+        .result(result_fourth),
         .clk(clk)
         );
+    float_to_fixed floatToFixed(
+        .data(result_fourth),
+        .result(result_fourth_fixed),
+        .clk(clk)
+    );
+
+    reg geoff_reset = 1'b0;
+    reg geoff_start = 1'b1;
+    reg geoff_done = 1'b0;
+
+    
+    cordic geoff(
+        .clk(clk),
+        .reset(geoff_reset), //active-high
+	    .start(geoff_start), //high at begg
+        .angle(result_fourth_fixed),
+        .cos_out(result_fifth),
+	    .done(geoff_done)
+    );
+
+    float_to_fixed fixedToFloat(
+        .data(result_fifth),
+        .result(result_fifth_fixed),
+        .clk(clk)
+    );
+
     Task6_Mult fourth_mult(
-        .dataa(),
-        .datab(),
-        .result(),
-        .clk(clk)
-        );
-    //CORDIC
-    //CORDIC
-    //CORDIC
-    Task6_Addr second_addr(
-        .dataa(),
-        .datab(),
-        .result(),
+        .dataa(result_second),
+        .datab(result_fifth_fixed),
+        .result(result_sixth),
         .clk(clk)
         );
     
-  assign result = result_seventh;
-
-
+    Task6_Addr second_addr(
+        .dataa(result_first),
+        .datab(result_sixth),
+        .result(result_seventh),
+        .clk(clk)
+        );
+    
+    assign result[31:0] = result_seventh[31:0];
 
 endmodule
