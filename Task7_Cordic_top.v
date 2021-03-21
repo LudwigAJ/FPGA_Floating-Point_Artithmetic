@@ -39,32 +39,32 @@ module Task_7_top(
     wire [31:0] result_sixth;
     wire [31:0] result_seventh;
 
-    Task6_Mult first_mult(
+    Task6_Mult_top first_mult(
         .dataa(point_five),
         .datab(data),
         .result(result_first),
         .clk(clk)
         );
     )
-    Task6_Mult second_mult(
+    Task6_Mult_top second_mult(
         .dataa(data),
         .datab(data),
         .result(result_second),
         .clk(clk)
         );
-    Task6_Sub first_sub(
+    Task6_Sub_top first_sub(
         .dataa(data),
         .datab(one_twenty_eight),
         .result(result_third),
         .clk(clk)
         );
-    Task6_Mult third_mult(
+    Task6_Mult_top third_mult(
         .dataa(result_third),
         .datab(one_over_one_twenty_eight),
         .result(result_fourth),
         .clk(clk)
         );
-    float_to_fixed floatToFixed(
+    float_to_fixed_top floatToFixed(
         .data(result_fourth),
         .result(result_fourth_fixed),
         .clk(clk)
@@ -90,14 +90,14 @@ module Task_7_top(
         .clk(clk)
     );
 
-    Task6_Mult fourth_mult(
+    Task6_Mult_top fourth_mult(
         .dataa(result_second),
         .datab(result_fifth_fixed),
         .result(result_sixth),
         .clk(clk)
         );
     
-    Task6_Addr second_addr(
+    Task6_Addr_top second_addr(
         .dataa(result_first),
         .datab(result_sixth),
         .result(result_seventh),
