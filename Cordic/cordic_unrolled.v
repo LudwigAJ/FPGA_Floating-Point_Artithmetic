@@ -3,18 +3,18 @@ module cordic_unrolled(
     reset, //active-high
 	 start, //high at begg
     angle,
-    cos_out,
+    cos_out
 );
 
 input clk, reset, start;
-input [31:0] angle;
-output [31:0] cos_out;
+input [21:0] angle;
+output [21:0] cos_out;
 
 reg [3:0] i;  //iterator
-reg [31:0] e_i, x, y, z, x_shifted, y_shifted; //angle of iteration plus others...
+reg [21:0] e_i, x, y, z, x_shifted, y_shifted; //angle of iteration plus others...
 reg d;
 
-wire [31:0] cos_out;
+wire [21:0] cos_out;
 wire [3:0] iteration;
 
 assign cos_out = x;
@@ -22,16 +22,16 @@ assign cos_out = x;
 always@(posedge clk) begin
     if (start) begin   //initial values
         i = 4'd0;
-        x = 32'h26dd3b6a;
-        y = 32'd0;
+        x = 22'b10011011011101001110;
+        y = 22'd0;
         z = angle;
 		
         //0 iteration
         
-        d = z[31];
+        d = z[21];
         y_shifted = y >> i;
         x_shifted = x >> i;
-        e_i = 32'h3243f6a9;
+        e_i = 22'b11001001000011111101;
         x = x + (d ? y_shifted : -y_shifted);
         y = y + (d ? -x_shifted : x_shifted);
         z = z + (d ? e_i : -e_i);
@@ -39,10 +39,10 @@ always@(posedge clk) begin
 		  
         //1 iteration
 
-        d = z[31];
+        d = z[21];
         y_shifted = y >> i;
         x_shifted = x >> i;
-        e_i = 32'h1dac6705;
+        e_i = 22'b01110110101100011001;
         x = x + (d ? y_shifted : -y_shifted);
         y = y + (d ? -x_shifted : x_shifted);
         z = z + (d ? e_i : -e_i);
@@ -50,10 +50,10 @@ always@(posedge clk) begin
 
         //2 iteration
 
-        d = z[31];
+        d = z[21];
         y_shifted = y >> i;
         x_shifted = x >> i;
-        e_i = 32'h0fadbafd;
+        e_i = 22'b00111110101101101110;
         x = x + (d ? y_shifted : -y_shifted);
         y = y + (d ? -x_shifted : x_shifted);
         z = z + (d ? e_i : -e_i);
@@ -61,10 +61,10 @@ always@(posedge clk) begin
 
         //3 iteration
 
-        d = z[31];
+        d = z[21];
         y_shifted = y >> i;
         x_shifted = x >> i;
-        e_i = 32'h07f56ea7;
+        e_i = 22'b00011111110101011011;
         x = x + (d ? y_shifted : -y_shifted);
         y = y + (d ? -x_shifted : x_shifted);
         z = z + (d ? e_i : -e_i);
@@ -72,10 +72,10 @@ always@(posedge clk) begin
 	 
         //4 iteration
 
-        d = z[31];
+        d = z[21];
         y_shifted = y >> i;
         x_shifted = x >> i;
-        e_i = 32'h03feab77;
+        e_i = 22'b00001111111110101010;
         x = x + (d ? y_shifted : -y_shifted);
         y = y + (d ? -x_shifted : x_shifted);
         z = z + (d ? e_i : -e_i);
@@ -83,10 +83,10 @@ always@(posedge clk) begin
 
         //5 iteration
 
-        d = z[31];
+        d = z[21];
         y_shifted = y >> i;
         x_shifted = x >> i;
-        e_i = 32'h01ffd55c;
+        e_i = 22'b00000111111111110101;
         x = x + (d ? y_shifted : -y_shifted);
         y = y + (d ? -x_shifted : x_shifted);
         z = z + (d ? e_i : -e_i);
@@ -94,10 +94,10 @@ always@(posedge clk) begin
 
         //6 iteration
 
-        d = z[31];
+        d = z[21];
         y_shifted = y >> i;
         x_shifted = x >> i;
-        e_i = 32'h00fffaab;
+        e_i = 22'b00000011111111111110;
         x = x + (d ? y_shifted : -y_shifted);
         y = y + (d ? -x_shifted : x_shifted);
         z = z + (d ? e_i : -e_i);
@@ -105,10 +105,10 @@ always@(posedge clk) begin
 
         //7 iteration
 
-        d = z[31];
+        d = z[21];
         y_shifted = y >> i;
         x_shifted = x >> i;
-        e_i = 32'h007fff55;
+        e_i = 22'b00000001111111111111;
         x = x + (d ? y_shifted : -y_shifted);
         y = y + (d ? -x_shifted : x_shifted);
         z = z + (d ? e_i : -e_i);
@@ -116,10 +116,10 @@ always@(posedge clk) begin
 
         //8 iteration
 
-        d = z[31];
+        d = z[21];
         y_shifted = y >> i;
         x_shifted = x >> i;
-        e_i = 32'h003fffeb;
+        e_i = 22'b00000000111111111111;
         x = x + (d ? y_shifted : -y_shifted);
         y = y + (d ? -x_shifted : x_shifted);
         z = z + (d ? e_i : -e_i);
@@ -127,10 +127,10 @@ always@(posedge clk) begin
 
         //9 iteration
 
-        d = z[31];
+        d = z[21];
         y_shifted = y >> i;
         x_shifted = x >> i;
-        e_i = 32'h001ffffd;
+        e_i = 22'b00000000011111111111;
         x = x + (d ? y_shifted : -y_shifted);
         y = y + (d ? -x_shifted : x_shifted);
         z = z + (d ? e_i : -e_i);
@@ -138,10 +138,10 @@ always@(posedge clk) begin
 
         //10 iteration
 
-        d = z[31];
+        d = z[21];
         y_shifted = y >> i;
         x_shifted = x >> i;
-        e_i = 32'h00100000;
+        e_i = 22'b00000000010000000000;
         x = x + (d ? y_shifted : -y_shifted);
         y = y + (d ? -x_shifted : x_shifted);
         z = z + (d ? e_i : -e_i);
@@ -149,10 +149,10 @@ always@(posedge clk) begin
 
         //11 iteration
 
-        d = z[31];
+        d = z[21];
         y_shifted = y >> i;
         x_shifted = x >> i;
-        e_i = 32'h00080000;
+        e_i = 22'b00000000001000000000;
         x = x + (d ? y_shifted : -y_shifted);
         y = y + (d ? -x_shifted : x_shifted);
         z = z + (d ? e_i : -e_i);
@@ -160,10 +160,10 @@ always@(posedge clk) begin
 
         //12 iteration
 
-        d = z[31];
+        d = z[21];
         y_shifted = y >> i;
         x_shifted = x >> i;
-        e_i = 32'h00040000;
+        e_i = 22'b00000000000100000000;
         x = x + (d ? y_shifted : -y_shifted);
         y = y + (d ? -x_shifted : x_shifted);
         z = z + (d ? e_i : -e_i);
@@ -171,10 +171,10 @@ always@(posedge clk) begin
 
         //13 iteration
 
-        d = z[31];
+        d = z[21];
         y_shifted = y >> i;
         x_shifted = x >> i;
-        e_i = 32'h00020000;
+        e_i = 22'b00000000000010000000;
         x = x + (d ? y_shifted : -y_shifted);
         y = y + (d ? -x_shifted : x_shifted);
         z = z + (d ? e_i : -e_i);
@@ -182,10 +182,10 @@ always@(posedge clk) begin
 
         //14 iteration
 
-        d = z[31];
+        d = z[21];
         y_shifted = y >> i;
         x_shifted = x >> i;
-        e_i = 32'h00010000;
+        e_i = 22'b00000000000001000000;
         x = x + (d ? y_shifted : -y_shifted);
         y = y + (d ? -x_shifted : x_shifted);
         z = z + (d ? e_i : -e_i);
@@ -193,10 +193,10 @@ always@(posedge clk) begin
 
         //15 iteration
 
-        d = z[31];
+        d = z[21];
         y_shifted = y >> i;
         x_shifted = x >> i;
-        e_i = 32'h00008000;
+        e_i = 22'b00000000000000100000;
         x = x + (d ? y_shifted : -y_shifted);
         y = y + (d ? -x_shifted : x_shifted);
         z = z + (d ? e_i : -e_i);
@@ -204,8 +204,8 @@ always@(posedge clk) begin
 	 end
 	 else if (reset) begin
         i <= 4'd0;
-        x <= 32'h26dd3b6a;
-        y <= 32'd0;
+        x <= 22'b10011011011101001110;
+        y <= 22'd0;
 		  z <= angle;
 	 end
 end
