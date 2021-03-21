@@ -18,7 +18,7 @@ module Task_7_top(
 
     input clk;
     input [31:0] data;
-    output [31:0] result
+    output [31:0] result;
 
     // Constants //
     wire [31:0] point_five;
@@ -45,7 +45,6 @@ module Task_7_top(
         .result(result_first),
         .clk(clk)
         );
-    )
     Task6_Mult_top second_mult(
         .dataa(data),
         .datab(data),
@@ -68,7 +67,7 @@ module Task_7_top(
         .data(result_fourth),
         .result(result_fourth_fixed),
         .clk(clk)
-    );
+    	);
 
     reg geoff_reset = 1'b0;
     reg geoff_start = 1'b1;
@@ -78,17 +77,17 @@ module Task_7_top(
     cordic geoff(
         .clk(clk),
         .reset(geoff_reset), //active-high
-	    .start(geoff_start), //high at begg
+	.start(geoff_start), //high at begg
         .angle(result_fourth_fixed),
         .cos_out(result_fifth),
-	    .done(geoff_done)
-    );
+	.done(geoff_done)
+    	);
 
     float_to_fixed fixedToFloat(
         .data(result_fifth),
         .result(result_fifth_fixed),
         .clk(clk)
-    );
+    	);
 
     Task6_Mult_top fourth_mult(
         .dataa(result_second),
