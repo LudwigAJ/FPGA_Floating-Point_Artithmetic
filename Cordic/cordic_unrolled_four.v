@@ -1,44 +1,39 @@
 module cordic_unrolled_four(
     clk,
+	clk_en,
     reset, //active-high
-    start, //high at begg
     angle,
     cos_out,
-	 done
+	done
 );
 
-input clk, reset, start;
+input clk, clk_en, reset;
 input [21:0] angle;
 output [21:0] cos_out;
 output done;
 
-reg state, done_reg;
+reg state = 1'b0;
+reg done, d;
 reg [3:0] i;  //iterator
-reg [21:0] e_i, x, y, z, x_shifted, y_shifted; //angle of iteration plus others...
-reg d;
-wire [21:0] cos_out;
-wire done;
+reg [21:0] e_i, x, y, z, x_shifted, y_shifted, cos_out; //angle of iteration plus others...
 
-assign cos_out = x;
-assign done = done_reg;
 
 always@(posedge clk) begin
-    if (start) begin   //initial values
-        i = 4'd0;
-		  x = 22'b10011011011101001110;
-		  y = 22'd0;
-        z = angle;
-        state = 1'b1;
-		  done_reg = 1'b0;
-    end
-	 else if (reset) begin
+	 if (reset) begin
         i = 4'd0;
         x = 22'b10011011011101001110;
         y = 22'd0;
-		  z = angle;
-		  done_reg = 1'b0;
+		  z = angle[20:0];
+		  state = 1'b0;
 	 end
-    if (state == 1'b1) begin        //updateing values
+	 else if (clk_en && !state) begin   //initial values
+        i = 4'd0;
+        x = 22'b10011011011101001110;
+        y = 22'd0;
+        z = angle[20:0];
+        state = 1'b1;
+    end
+    if (state && clk_en) begin        //updateing values
         if(i == 4'd0) begin
             d = z[21];
             x_shifted = x >> i;
@@ -191,7 +186,8 @@ always@(posedge clk) begin
             z = z + (d ? e_i : -e_i);
             
 				state = 1'b0;
-				done_reg = 1'b1;
+				done = 1'b1;
+				cos_out = x;
         end
 		  
 		  
