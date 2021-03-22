@@ -13,12 +13,28 @@
 module Task7_Cordic_top(
     clk,
     data,
-    result
+	 result,
+    result1,
+	 result2,
+	 result3,
+	 result4,
+	 result5,
+	 result6,
+	 result7,
+	 result8
     );
 
     input clk;
     input [31:0] data;
     output reg [31:0] result;
+	 output [31:0] result1;
+	 output [31:0] result2;
+	 output [31:0] result3;
+	 output [31:0] result4;
+	 output [21:0] result5;
+	 output [21:0] result6;
+	 output [31:0] result7;
+	 output [31:0] result8;
 
     // Constants //
     //wire [31:0] point_five;
@@ -53,6 +69,7 @@ module Task7_Cordic_top(
         .done(enable_1),
         .clk(clk)
         );
+	 assign result1 = result_first;
     Task6_Mult_top second_mult(
         .dataa(data),
         .datab(data),
@@ -61,6 +78,7 @@ module Task7_Cordic_top(
         .done(enable_2),
         .clk(clk)
         );
+	 assign result2 = result_second;
     Task6_Sub_top first_sub(
         .dataa(data),
         .datab(one_twenty_eight),
@@ -69,6 +87,7 @@ module Task7_Cordic_top(
         .done(enable_3),
         .clk(clk)
         );
+	 assign result3 = result_third;
     Task6_Mult_top third_mult(
         .dataa(result_third),
         .datab(one_over_one_twenty_eight),
@@ -77,6 +96,7 @@ module Task7_Cordic_top(
         .done(enable_4),
         .clk(clk)
         );
+	 assign result4 = result_fourth;
     Float_Fixed_Conversion floatToFixed(
         .data(result_fourth),
         .result(result_fourth_fixed),
@@ -84,7 +104,7 @@ module Task7_Cordic_top(
         .done(enable_5),
         .clk(clk)
     );
-
+	 assign result5 = result_fourth_fixed;
     reg geoff_reset = 1'b0;
 
     cordic geoff(
@@ -95,7 +115,7 @@ module Task7_Cordic_top(
         .cos_out(result_fifth),
 	    .done(enable_6)
     );
-
+	 assign result6 = result_fifth;
     Fixed_Float_Conversion fixedToFloat(
         .data(result_fifth),
         .result(result_fifth_fixed),
@@ -103,7 +123,7 @@ module Task7_Cordic_top(
         .done(enable_7),
         .clk(clk)
     );
-
+	 assign result7 = result_fifth_fixed;
     Task6_Mult_top fourth_mult(
         .dataa(result_second),
         .datab(result_fifth_fixed),
@@ -112,7 +132,7 @@ module Task7_Cordic_top(
         .done(enable_8),
         .clk(clk)
         );
-    
+    assign result8 = result_sixth;
     Task6_Addr_top second_addr(
         .dataa(result_first),
         .datab(result_sixth),
