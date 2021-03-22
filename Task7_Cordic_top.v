@@ -34,8 +34,8 @@ module Task7_Cordic_top(
     wire [31:0] result_third;
     wire [31:0] result_fourth;
     wire [21:0] result_fourth_fixed;
-    wire [31:0] result_fifth;
-    wire [21:0] result_fifth_fixed;
+    wire [21:0] result_fifth;
+    wire [31:0] result_fifth_fixed;
     wire [31:0] result_sixth;
     wire [31:0] result_seventh;
 
