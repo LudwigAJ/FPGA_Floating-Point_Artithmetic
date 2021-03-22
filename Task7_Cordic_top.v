@@ -10,7 +10,7 @@
 // FIRST + SIXTH : SEVENTH
 // 4 MULT, 1 ADD, 1 SUB, 1 CORDIC 
 
-module Task_7_top(
+module Task7_Cordic_top(
     clk,
     data,
     result
@@ -63,31 +63,30 @@ module Task_7_top(
         .result(result_fourth),
         .clk(clk)
         );
-    float_to_fixed floatToFixed(
+    Float_Fixed_Conversion floatToFixed(
         .data(result_fourth),
         .result(result_fourth_fixed),
         .clk(clk)
-    	);
+    );
 
     reg geoff_reset = 1'b0;
-    reg geoff_start = 1'b1;
+    //reg geoff_start = 1'b1;
     wire geoff_done;
 
     
     cordic geoff(
         .clk(clk),
         .reset(geoff_reset), //active-high
-	.start(geoff_start), //high at begg
         .angle(result_fourth_fixed),
         .cos_out(result_fifth),
-	.done(geoff_done)
-    	);
+	     .done(geoff_done)
+    );
 
-    float_to_fixed fixedToFloat(
+    Fixed_Float_Conversion fixedToFloat(
         .data(result_fifth),
         .result(result_fifth_fixed),
         .clk(clk)
-    	);
+    );
 
     Task6_Mult_top fourth_mult(
         .dataa(result_second),
