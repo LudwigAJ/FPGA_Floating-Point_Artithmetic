@@ -23,24 +23,29 @@ module Float_Fixed_Conversion(
     reg [20:0] fixed_val;
     reg [7:0] shifts;
     reg [23:0] full_mant;
+	 
+	 reg complete;
 
     assign {sign_float, exp_float, mant_float[22:0]} = data;
 
     always @ (posedge clk) begin
+		  if (complete) begin
+				done <= 1'b1;
+		  end
         if (enable) begin
             full_mant = {1'b1, mant_float};
             sign_fixed = sign_float;
 
             if (exp_float == 8'b0 || exp_float > 8'd127) begin
                 result = 22'b0;
-                done <= 1'b1;
+                complete <= 1'b1;
             end
             else begin
                 shifts = 8'd127 - exp_float;
                 full_mant = full_mant >> shifts;
                 fixed_val[20:0] = full_mant[23:3];
                 result = {sign_fixed, fixed_val[20:0]};
-                done <= 1'b1;
+                complete <= 1'b1;
             end
         end
     end

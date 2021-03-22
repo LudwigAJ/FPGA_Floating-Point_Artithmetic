@@ -36,7 +36,7 @@ module Task6_Sub(
 	reg [23:0] tmp_mant_done;
 	
 	reg [4:0] counter;
-	
+	reg complete;
 
 	// Split the different parts up for ease of use.
 
@@ -45,19 +45,22 @@ module Task6_Sub(
 	
 	
 	always @ (posedge clk) begin
+		if (complete) begin
+			done <= 1'b1;
+		end
 		if (enable) begin
 
 			if ({exp_a, mant_a} == 31'b0 && {exp_b, mant_b} == 31'b0) begin
 				result <= 32'b0;
-				done <= 1'b1;
+				complete <= 1'b1;
 			end
 			else if ({exp_a, mant_a} == 31'b0 && {exp_b, mant_b} != 31'b0) begin
 				result <= datab;
-				done <= 1'b1;
+				complete <= 1'b1;
 			end
 			else if ({exp_a, mant_a} != 31'b0 && {exp_b, mant_b} == 31'b0) begin
 				result <= dataa;
-				done <= 1'b1;
+				complete <= 1'b1;
 			end
 			else begin
 				if (exp_a > exp_b) begin
@@ -110,20 +113,23 @@ module Task6_Sub(
 				//	tmp_mant_done = ~tmp_mant_sum[23:0] + 1'b1;
 				//end
 				//else begin
-				tmp_mant_done = tmp_mant_sum[23:0];
+				
 				//end
 				
 				if (sign_big == sign_small && tmp_mant_sum[24]) begin
 					counter = 5'b0;
-					tmp_mant_done = tmp_mant_done >> 1;
+					tmp_mant_sum = tmp_mant_sum >> 1;
 					tmp_mant_done[23] = 1'b1;
+					exp_big = exp_big + 1'b1;
+					tmp_mant_done[23:0] = tmp_mant_sum[23:0];
 				end
 				else begin
 					counter = 5'b0;
-					while (~tmp_mant_done[23] && counter < 5'd24) begin
-						tmp_mant_done = tmp_mant_done << 1;
+					while (~tmp_mant_sum[23] && counter < 5'd24) begin
+						tmp_mant_sum = tmp_mant_sum << 1;
 						counter = counter + 1'b1;
 					end
+					tmp_mant_done[23:0] = tmp_mant_sum[23:0];
 				end
 				
 				if (counter >= 5'd24) begin
@@ -136,7 +142,7 @@ module Task6_Sub(
 				end
 				
 				result = {sign_sum, exp_sum, tmp_mant_done[22:0]};
-				done <= 1'b1;
+				complete <= 1'b1;
 			end
 		end
 	end

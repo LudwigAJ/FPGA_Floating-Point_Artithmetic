@@ -28,6 +28,8 @@ module Task6_Mult(
 	reg [47:0] tmp_mant_sum;
 	reg [22:0] mant_sum;
 	
+	reg complete;
+	
 	assign {sign_a, exp_a, mant_a} = dataa[31:0];
 	assign {sign_b, exp_b, mant_b} = datab[31:0];
 	
@@ -35,10 +37,13 @@ module Task6_Mult(
 	
 	
 	always @ (posedge clk) begin
+		if (complete) begin
+			done <= 1'b1;
+		end
 		if (enable) begin
 			if ({exp_a, mant_a} == 30'b0 || {exp_b, mant_b} == 30'b0) begin
 				result <= 32'b0;
-				done <= 1'b1;
+				complete <= 1'b1;
 			end
 			else begin
 				
@@ -59,7 +64,7 @@ module Task6_Mult(
 				mant_sum = tmp_mant_sum[45:23];
 				
 				result = {sign_sum, exp_sum, mant_sum};
-				done <= 1'b1;
+				complete <= 1'b1;
 			end
 		end
 	end
