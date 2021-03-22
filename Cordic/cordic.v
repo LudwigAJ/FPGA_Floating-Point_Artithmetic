@@ -51,14 +51,14 @@ always@(posedge clk) begin
         i <= 4'd0;
         x <= 22'b10011011011101001110;
         y <= 22'd0;
-		  z <= angle;
+		  z <= angle[20:0];
 		  state <= 1'b0;
 	 end
 	 else if (clk_en && !state) begin   //initial values
         i <= 4'd0;
         x <= 22'b10011011011101001110;
         y <= 22'd0;
-        z <= angle;
+        z <= angle[20:0];
         state <= 1'b1;
     end
     else begin        //updateing values
@@ -82,10 +82,10 @@ always @* begin
         y_next = y + (d ? -x_shifted : x_shifted);
         z_next = z + (d ? e_i : -e_i);
         i_next = i + 1;
+		  cos_out = x_next;
         if(i == 4'd15) begin   //done 16 iterations
 				done = 1'b1;
             state_next = 1'b0; 
-				cos_out = x_next;
         end
     end
 end
