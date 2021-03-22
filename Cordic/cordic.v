@@ -1,10 +1,10 @@
 module cordic(
     clk,
-	 clk_en,
+	clk_en,
     reset, //active-high
     angle,
     cos_out,
-	 done
+	done
 );
 
 input clk, clk_en, reset;

@@ -6,10 +6,14 @@ module Task6_Sub(
 	dataa,
 	datab,
 	result,
+	enable,
+	done,
 	clk);
 	
+	input enable;
 	input clk;
 	input [31:0] dataa, datab;
+	output reg done;
 	output reg [31:0] result;
 	
 	// Split up into regs so that we can retrieve sign, exp, & mantissa.
@@ -41,33 +45,46 @@ module Task6_Sub(
 	
 	
 	always @ (posedge clk) begin
-	
-		if ({exp_a, mant_a} == 31'b0 && {exp_b, mant_b} == 31'b0) begin
-			result <= 32'b0;
-		end
-		else if ({exp_a, mant_a} == 31'b0 && {exp_b, mant_b} != 31'b0) begin
-			result <= datab;
-		end
-		else if ({exp_a, mant_a} != 31'b0 && {exp_b, mant_b} == 31'b0) begin
-			result <= dataa;
-		end
-		else begin
-			if (exp_a > exp_b) begin
-				exp_big = exp_a;
-				sign_big = sign_a;
-				sign_small = sign_b;
-				mant_big = mant_a;
-				mant_small = mant_b;
-				exp_diff = exp_a - exp_b;
+		if (enable) begin
+
+			if ({exp_a, mant_a} == 31'b0 && {exp_b, mant_b} == 31'b0) begin
+				result <= 32'b0;
+				done <= 1'b1;
 			end
-			else if (exp_a == exp_b) begin
-				if (mant_a > mant_b) begin
+			else if ({exp_a, mant_a} == 31'b0 && {exp_b, mant_b} != 31'b0) begin
+				result <= datab;
+				done <= 1'b1;
+			end
+			else if ({exp_a, mant_a} != 31'b0 && {exp_b, mant_b} == 31'b0) begin
+				result <= dataa;
+				done <= 1'b1;
+			end
+			else begin
+				if (exp_a > exp_b) begin
 					exp_big = exp_a;
 					sign_big = sign_a;
 					sign_small = sign_b;
 					mant_big = mant_a;
 					mant_small = mant_b;
 					exp_diff = exp_a - exp_b;
+				end
+				else if (exp_a == exp_b) begin
+					if (mant_a > mant_b) begin
+						exp_big = exp_a;
+						sign_big = sign_a;
+						sign_small = sign_b;
+						mant_big = mant_a;
+						mant_small = mant_b;
+						exp_diff = exp_a - exp_b;
+					end
+					else begin
+						exp_big = exp_b;
+						sign_big = sign_b;
+						sign_small = sign_a;
+						mant_big = mant_b;
+						mant_small = mant_a;
+						exp_diff = exp_b - exp_a;
+					end
 				end
 				else begin
 					exp_big = exp_b;
@@ -77,60 +94,51 @@ module Task6_Sub(
 					mant_small = mant_a;
 					exp_diff = exp_b - exp_a;
 				end
-			end
-			else begin
-				exp_big = exp_b;
-				sign_big = sign_b;
-				sign_small = sign_a;
-				mant_big = mant_b;
-				mant_small = mant_a;
-				exp_diff = exp_b - exp_a;
-			end
-			
-			tmp_mant_big = {1'b1, mant_big};
-			tmp_mant_small = {1'b1, mant_small} >> exp_diff;
-			
-			if (sign_big == sign_small) begin
-				tmp_mant_sum = tmp_mant_big + tmp_mant_small;
-			end
-			else if (sign_big != sign_small) begin
-				tmp_mant_sum = tmp_mant_big - tmp_mant_small;
-			end
-			
-			
-			//if (tmp_mant_sum[23] && ~tmp_mant_sum[24] && sign_big != sign_small) begin
-			//	tmp_mant_done = ~tmp_mant_sum[23:0] + 1'b1;
-			//end
-			//else begin
-			tmp_mant_done = tmp_mant_sum[23:0];
-			//end
-			
-			if (sign_big == sign_small && tmp_mant_sum[24]) begin
-				counter = 5'b0;
-				tmp_mant_done = tmp_mant_done >> 1;
-				tmp_mant_done[23] = 1'b1;
-			end
-			else begin
-				counter = 5'b0;
-				while (~tmp_mant_done[23] && counter < 5'd24) begin
-					tmp_mant_done = tmp_mant_done << 1;
-					counter = counter + 1'b1;
+				
+				tmp_mant_big = {1'b1, mant_big};
+				tmp_mant_small = {1'b1, mant_small} >> exp_diff;
+				
+				if (sign_big == sign_small) begin
+					tmp_mant_sum = tmp_mant_big + tmp_mant_small;
 				end
+				else if (sign_big != sign_small) begin
+					tmp_mant_sum = tmp_mant_big - tmp_mant_small;
+				end
+				
+				
+				//if (tmp_mant_sum[23] && ~tmp_mant_sum[24] && sign_big != sign_small) begin
+				//	tmp_mant_done = ~tmp_mant_sum[23:0] + 1'b1;
+				//end
+				//else begin
+				tmp_mant_done = tmp_mant_sum[23:0];
+				//end
+				
+				if (sign_big == sign_small && tmp_mant_sum[24]) begin
+					counter = 5'b0;
+					tmp_mant_done = tmp_mant_done >> 1;
+					tmp_mant_done[23] = 1'b1;
+				end
+				else begin
+					counter = 5'b0;
+					while (~tmp_mant_done[23] && counter < 5'd24) begin
+						tmp_mant_done = tmp_mant_done << 1;
+						counter = counter + 1'b1;
+					end
+				end
+				
+				if (counter >= 5'd24) begin
+					exp_sum = 8'b0;
+					sign_sum = sign_big;
+				end
+				else begin
+					exp_sum = exp_big - counter;
+					sign_sum = sign_big;
+				end
+				
+				result = {sign_sum, exp_sum, tmp_mant_done[22:0]};
+				done <= 1'b1;
 			end
-			
-			if (counter >= 5'd24) begin
-				exp_sum = 8'b0;
-				sign_sum = sign_big;
-			end
-			else begin
-				exp_sum = exp_big - counter;
-				sign_sum = sign_big;
-			end
-			
-			result = {sign_sum, exp_sum, tmp_mant_done[22:0]};
-			
 		end
 	end
-	
 endmodule
 	

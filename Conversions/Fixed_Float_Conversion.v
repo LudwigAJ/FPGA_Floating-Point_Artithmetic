@@ -4,11 +4,15 @@
 module fixed_to_float(
     data,
     result,
+    enable,
+    done,
     clk
     );
 
     input clk;
+    input enable;
     input [21:0] data;
+    output reg done;
     output reg [31:0] result;
 
     wire sign_fixed;
@@ -22,24 +26,27 @@ module fixed_to_float(
     assign {sign_fixed, fixed_val[20:0]} = data;
 
     always @ (posedge clk) begin
-
-        if (fixed_val == 21'd0) begin
-            result = 32'b0;
-        end
-        else begin
-            sign_float = sign_fixed;
-            exp_float = 8'd127; // i.e. set to 0 + bias = 127.
-            mant_float[23:3] = fixed_val[20:0];
-				mant_float[2:0] = 3'b0;
-
-            counter = 5'b0;
-
-            while (~mant_float[23] && counter < 5'd21) begin
-                mant_float = mant_float << 1'b1;
-                counter = counter + 1'b1;
+        if (enable) begin
+            if (fixed_val == 21'd0) begin
+                result = 32'b0;
+                done <= 1'b1;
             end
-            exp_float = exp_float - counter;
-            result = {sign_float, exp_float, mant_float[22:0]};
+            else begin
+                sign_float = sign_fixed;
+                exp_float = 8'd127; // i.e. set to 0 + bias = 127.
+                mant_float[23:3] = fixed_val[20:0];
+                mant_float[2:0] = 3'b0;
+
+                counter = 5'b0;
+
+                while (~mant_float[23] && counter < 5'd21) begin
+                    mant_float = mant_float << 1'b1;
+                    counter = counter + 1'b1;
+                end
+                exp_float = exp_float - counter;
+                result = {sign_float, exp_float, mant_float[22:0]};
+                done <= 1'b1;
+            end
         end
     end
 
