@@ -21,12 +21,12 @@ module Task7_Cordic_top(
     output [31:0] result;
 
     // Constants //
-    wire [31:0] point_five;
-    wire [31:0] one_twenty_eight;
-    wire [31:0] one_over_one_twenty_eight;
-    assign pointfive = 32'b00111111000000000000000000000000; // 0.5
-    assign onetwentyeight = 32'b01000011000000000000000000000000; //128.0
-    assign one_over_one_twenty_eight = 32'b00111100000000000000000000000000; // 1.0/128.0 = 0.0078125
+    //wire [31:0] point_five;
+    //wire [31:0] one_twenty_eight;
+    //wire [31:0] one_over_one_twenty_eight;
+    parameter point_five = 32'b00111111000000000000000000000000; // 0.5
+    parameter one_twenty_eight = 32'b01000011000000000000000000000000; //128.0
+    parameter one_over_one_twenty_eight = 32'b00111100000000000000000000000000; // 1.0/128.0 = 0.0078125
     // Constants - end //
 
     wire [31:0] result_first;
