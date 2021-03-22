@@ -15,6 +15,16 @@ module tb ();
 	wire [21:0] result6;
 	wire [31:0] result7;
 	wire [31:0] result8;
+	
+	wire enable1;
+	wire enable2;
+	wire enable3;
+	wire enable4;
+	wire enable5;
+	wire enable6;
+	wire enable7;
+	wire enable8;
+	wire enable9;
 
 	//Instantiate the DUT
 	//mul refers to the verilog module defined by the LPM_MULT ip
@@ -29,7 +39,16 @@ module tb ();
 		.result5(result5),
 	   .result6(result6),
 		.result7(result7),
-		.result8(result8)
+		.result8(result8),
+		.enable1(enable1),
+	   .enable2(enable2),
+	   .enable3(enable3),
+	   .enable4(enable4),
+	   .enable5(enable5),
+	   .enable6(enable6),
+	   .enable7(enable7),
+	   .enable8(enable8),
+	   .enable9(enable9)
 	);
 
 	// ---- If a clock is required, see below ----
