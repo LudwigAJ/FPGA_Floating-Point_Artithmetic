@@ -18,7 +18,7 @@ module Task7_Cordic_top(
 
     input clk;
     input [31:0] data;
-    output reg [31:0] result;
+    output [31:0] result;
 
     // Constants //
     //wire [31:0] point_five;
@@ -124,10 +124,10 @@ module Task7_Cordic_top(
     
     always @ (posedge clk) begin
         if (enable_9) begin
-            result[31:0] <= result_seventh[31:0];
+            assign result[31:0] = result_seventh[31:0];
         end
     end
     
-    //assign result[31:0] = result_seventh[31:0];
+    assign result[31:0] = result_seventh[31:0];
 
 endmodule
