@@ -1,7 +1,7 @@
 // Fixed point 22 bit to single precision 32 bit (IEEE-754)
 // 22-bit fixed point : 1 sign bit + 1 integer bit + 20 fractional bits.
 
-module fixed_to_float(
+module Fixed_Float_Conversion(
     data,
     result,
     enable,
