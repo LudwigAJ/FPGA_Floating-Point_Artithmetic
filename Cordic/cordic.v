@@ -1,32 +1,29 @@
 module cordic(
     clk,
-    reset, //active-high //high at begg
+	 clk_en,
+    reset, //active-high
     angle,
     cos_out,
 	 done
 );
 
-input clk, reset;
+input clk, clk_en, reset;
 input [21:0] angle;
 output [21:0] cos_out;
 output done;
 
-reg state, state_next, done_reg, done_next;
+reg state = 1'b0;
+reg state_next = 1'b0;
+reg done = 1'b0;
 reg [3:0] i, i_next;  //iterator
-reg [21:0] e_i, x, y, z, x_next, y_next, z_next; //angle of iteration plus others...
+reg [21:0] e_i, x, y, z, x_next, y_next, z_next, cos_out; //angle of iteration plus others...
 
-wire [21:0] cos_out, x_shifted, y_shifted;
-wire d, done;
+wire [21:0] x_shifted, y_shifted;
+wire d;
 
-reg start;
-initial start = 1'b1;
-
-
-assign cos_out = x;
 assign d = z[21];
 assign x_shifted = x >> i;
 assign y_shifted = y >> i;
-assign done = done_reg;
 
 always @(i) begin //angle to be used in calc
     case(i)
@@ -50,29 +47,26 @@ always @(i) begin //angle to be used in calc
 end
 
 always@(posedge clk) begin
-    if (start) begin   //initial values
+	 if (reset) begin
+        i <= 4'd0;
+        x <= 22'b10011011011101001110;
+        y <= 22'd0;
+		  z <= angle;
+		  state <= 1'b0;
+	 end
+	 else if (clk_en && !state) begin   //initial values
         i <= 4'd0;
         x <= 22'b10011011011101001110;
         y <= 22'd0;
         z <= angle;
         state <= 1'b1;
-		  done_reg <= 1'b0;
-		  start <= 1'b0;
     end
-	 else if (reset) begin
-        i <= 4'd0;
-        x <= 22'b10011011011101001110;
-        y <= 22'd0;
-		  z <= angle;
-		  done_reg <= 1'b0;
-	 end
     else begin        //updateing values
         x <= x_next;
         y <= y_next;
         z <= z_next;
 		  i <= i_next;
         state <= state_next;
-		  done_reg <= done_next;
     end
 end
 
@@ -82,15 +76,16 @@ always @* begin
 	 z_next = z;
 	 i_next = i;
 	 state_next = state;
-	 done_next = done_reg;
     if(state)begin  //calculating section
+		  done = 1'b0;
         x_next = x + (d ? y_shifted : -y_shifted);
         y_next = y + (d ? -x_shifted : x_shifted);
         z_next = z + (d ? e_i : -e_i);
         i_next = i + 1;
         if(i == 4'd15) begin   //done 16 iterations
-				done_next = 1'b1;
+				done = 1'b1;
             state_next = 1'b0; 
+				cos_out = x_next;
         end
     end
 end

@@ -3,17 +3,17 @@ module tb ();
 
 	//Inputs
 	reg [21:0] angle;
-	reg clk, reset, start;
+	reg clk, clk_en, reset;
 
 	//Output(s)
 	wire [21:0] cos_out;
 	wire done;
 	
 	//module testing
-	cordic_unrolled_four unit(
+	cordic unit(
 		.clk(clk),
+		.clk_en(clk_en),
 		.reset(reset), 
-		.start(start),
 		.angle(angle),
 		.cos_out(cos_out),
 		.done(done)
@@ -35,18 +35,18 @@ module tb ();
 		
 		@(posedge clk);
 		
-		#19
-		start = 1'b1;
-		angle <= 22'h80000; //0.5
-		#2
-		start = 1'b0;
-		#797
+		#17
+		clk_en = 1'b1;
+		angle <= 22'b0010000000000000000000; //0.5
+		#300
+		clk_en = 1'b0;
 		
-		start = 1'b1;
-		angle <= 32'h100000;  //-1
-		#4
-		start = 1'b0;
-		#800
+		#40
+		clk_en = 1'b1;
+		angle <= 22'b0100000000000000000000;  //1
+		#300
+		clk_en = 1'b0;
+		#80
 //		
 //		start = 1'b1;
 //		angle <= 32'h60000000;  //1
