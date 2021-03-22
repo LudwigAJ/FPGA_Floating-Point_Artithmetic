@@ -1,13 +1,12 @@
 module cordic(
     clk,
-    reset, //active-high
-	 start, //high at begg
+    reset, //active-high //high at begg
     angle,
     cos_out,
 	 done
 );
 
-input clk, reset, start;
+input clk, reset;
 input [21:0] angle;
 output [21:0] cos_out;
 output done;
@@ -18,6 +17,9 @@ reg [21:0] e_i, x, y, z, x_next, y_next, z_next; //angle of iteration plus other
 
 wire [21:0] cos_out, x_shifted, y_shifted;
 wire d, done;
+
+reg start;
+initial start = 1'b1;
 
 
 assign cos_out = x;
@@ -55,6 +57,7 @@ always@(posedge clk) begin
         z <= angle;
         state <= 1'b1;
 		  done_reg <= 1'b0;
+		  start <= 1'b0;
     end
 	 else if (reset) begin
         i <= 4'd0;
