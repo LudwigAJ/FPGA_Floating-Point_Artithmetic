@@ -63,7 +63,7 @@ module Task_7_top(
         .result(result_fourth),
         .clk(clk)
         );
-    float_to_fixed_top floatToFixed(
+    float_to_fixed floatToFixed(
         .data(result_fourth),
         .result(result_fourth_fixed),
         .clk(clk)
