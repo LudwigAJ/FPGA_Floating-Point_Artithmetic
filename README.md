@@ -7,4 +7,4 @@
 
 
 
-##### None of this code nor data may by used, distributed, or sold without the consent of its owner. Me.
+###### None of this code nor data may by used, distributed, or sold without the consent of its owner. Me.
