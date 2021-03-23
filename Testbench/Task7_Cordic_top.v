@@ -15,7 +15,6 @@ module Task7_Cordic_top(
     data,
 	 result,
 	 start,
-	 done,
     result1, //REMOVE FROM HERE 
 	 result2,
 	 result3,
@@ -38,8 +37,7 @@ module Task7_Cordic_top(
     input clk;
 	 input start;
     input [31:0] data;
-    output reg [31:0] result;
-	 output reg done;
+    output [31:0] result;
 
 	 
 	 // THESE ARE FOR TESTBENCH // REMOVE FOR NIOS //
@@ -107,7 +105,18 @@ module Task7_Cordic_top(
 			enable_8 <= 1'b0;
 			enable_9 <= 1'b0;
 			
-			done = 1'b0;
+			// NEW ADDED REMOVE IF IT BREAKS
+			result_first_reg <= 32'b0;
+			result_second_reg <= 32'b0;
+			result_third_reg <= 32'b0;
+			result_fourth_reg <= 32'b0;
+			result_fourth_fixed_reg <= 22'b0;
+			result_fifth_reg <= 22'b0;
+			result_fifth_fixed_reg <= 32'b0;
+			result_sixth_reg <= 32'b0;
+			result_seventh_reg <= 32'b0;
+			// NEW ADDED REMOVE IF IT BREAKS - END
+	
 		end
 		else if (enable_wire3 & enable_wire2 & enable_wire1) begin
 			enable_1 <= enable_wire1;
@@ -150,16 +159,21 @@ module Task7_Cordic_top(
 		end
 		else if (enable_wire9) begin
 			enable_9 <= enable_wire9;
-			result_seventh_reg = result_seventh[31:0];
-			result[31:0] = result_seventh_reg[31:0];
+			result_seventh_reg <= result_seventh[31:0];
+			//result[31:0] = result_seventh_reg[31:0];
 			enable_8 <= 1'b0;
 			enable_1 <= 1'b0;
-			done <= 1'b1;
 		end
-		else if (enable_9) begin
-			enable_9 <= 1'b0;
-		end
+		//else if (enable_9) begin
+		//	enable_9 <= 1'b0;
+		//end
 	end
+	
+	// checking //
+	
+	assign result[31:0] = result_seventh_reg[31:0];
+	
+	// checking - end //
 	
     Task6_Mult_top first_mult(
         .dataa(point_five),
@@ -225,7 +239,7 @@ module Task7_Cordic_top(
 	 //reg [21:0]geoff_result;
 	 
 
-    cordic geoff(
+    cordic_unrolled geoff(
         .clk(clk),
         .clk_en(enable_5),
         .reset(geoff_reset), //active-high
@@ -273,6 +287,6 @@ module Task7_Cordic_top(
         .clk(clk)
         );
 	 
-    assign enable9 = enable_9;
+    //assign enable9 = enable_9;
 
 endmodule

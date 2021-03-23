@@ -15,15 +15,12 @@ module Task7_Cordic_top(
     data,
     result,
     start,
-    done
     );
 
     input clk;
     input start;
     input [31:0] data;
-    output reg [31:0] result;
-    output reg done;
-
+    output [31:0] result;
 		
     // Constants //
     //wire [31:0] point_five;
@@ -33,7 +30,6 @@ module Task7_Cordic_top(
     parameter one_twenty_eight = 32'b01000011000000000000000000000000; //128.0
     parameter one_over_one_twenty_eight = 32'b00111100000000000000000000000000; // 1.0/128.0 = 0.0078125
     // Constants - end //
-
 
     wire [31:0] result_first;
     wire [31:0] result_second;
@@ -56,8 +52,8 @@ module Task7_Cordic_top(
     reg [31:0] result_seventh_reg;
 
     reg enable_1, enable_2, enable_3, enable_4, enable_5, enable_6, enable_7, enable_8, enable_9;
+	 
     wire enable_wire1, enable_wire2, enable_wire3, enable_wire4, enable_wire5, enable_wire6, enable_wire7, enable_wire8, enable_wire9;
-
 
     reg start_1, start_2, start_3;
 	 
@@ -77,7 +73,18 @@ module Task7_Cordic_top(
 			enable_8 <= 1'b0;
 			enable_9 <= 1'b0;
 			
-			done = 1'b0;
+			// NEW ADDED REMOVE IF IT BREAKS
+			result_first_reg <= 32'b0;
+			result_second_reg <= 32'b0;
+			result_third_reg <= 32'b0;
+			result_fourth_reg <= 32'b0;
+			result_fourth_fixed_reg <= 22'b0;
+			result_fifth_reg <= 22'b0;
+			result_fifth_fixed_reg <= 32'b0;
+			result_sixth_reg <= 32'b0;
+			result_seventh_reg <= 32'b0;
+			// NEW ADDED REMOVE IF IT BREAKS - END
+	
 		end
 		else if (enable_wire3 & enable_wire2 & enable_wire1) begin
 			enable_1 <= enable_wire1;
@@ -120,16 +127,21 @@ module Task7_Cordic_top(
 		end
 		else if (enable_wire9) begin
 			enable_9 <= enable_wire9;
-			result_seventh_reg = result_seventh[31:0];
-			result[31:0] = result_seventh_reg[31:0];
+			result_seventh_reg <= result_seventh[31:0];
+			//result[31:0] = result_seventh_reg[31:0];
 			enable_8 <= 1'b0;
 			enable_1 <= 1'b0;
-			done <= 1'b1;
 		end
-		else if (enable_9) begin
-			enable_9 <= 1'b0;
-		end
+		//else if (enable_9) begin
+		//	enable_9 <= 1'b0;
+		//end
 	end
+	
+	// checking //
+	
+	assign result[31:0] = result_seventh_reg[31:0];
+	
+	// checking - end //
 	
     Task6_Mult_top first_mult(
         .dataa(point_five),
@@ -139,7 +151,7 @@ module Task7_Cordic_top(
         .done(enable_wire1),
         .clk(clk)
         );
-		  
+	 
     Task6_Mult_top second_mult(
         .dataa(data),
         .datab(data),
@@ -147,7 +159,7 @@ module Task7_Cordic_top(
         .enable(start_2),
         .done(enable_wire2),
         .clk(clk)
-        );  
+        );
 	 
     Task6_Sub_top first_sub(
         .dataa(data),
@@ -173,18 +185,18 @@ module Task7_Cordic_top(
         .enable(enable_4),
         .done(enable_wire5),
         .clk(clk)
-    	);
+    );
 	 
-    reg geoff_reset = 1'b0; 
+    reg geoff_reset = 1'b0;
 
-    cordic geoff(
-	.clk(clk),
-        	.clk_en(enable_5),
-        	.reset(geoff_reset), //active-high
-        	.angle(result_fourth_fixed_reg),
-        	.cos_out(result_fifth),
-	.done(enable_wire6)
-    	); 
+    cordic_unrolled geoff(
+        .clk(clk),
+        .clk_en(enable_5),
+        .reset(geoff_reset), //active-high
+        .angle(result_fourth_fixed_reg),
+        .cos_out(result_fifth),
+	     .done(enable_wire6)
+    );
 	 
     Fixed_Float_Conversion fixedToFloat(
         .data(result_fifth_reg),
@@ -192,7 +204,7 @@ module Task7_Cordic_top(
         .enable(enable_6),
         .done(enable_wire7),
         .clk(clk)
-        );
+    );
 	 
     Task6_Mult_top fourth_mult(
         .dataa(result_second_reg),

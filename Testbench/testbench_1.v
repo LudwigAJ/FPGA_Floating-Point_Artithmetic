@@ -6,7 +6,6 @@ module tb ();
 	reg clk;
 	
 	reg start;
-	wire done;
 	//Output from DUT is wire type
 	wire [31:0] result;
 	
@@ -35,7 +34,6 @@ module tb ();
 		.clk(clk),
 		.data(data),
 		.start(start),
-		.done(done),
 		.result(result),
 		.result1(result1),
 		.result2(result2),
@@ -92,7 +90,7 @@ module tb ();
 		
 		//datab <= 32'b0; 											// 0
 		
-		#1500
+		#1000
 		
 		$display($time, "<< Simulation Complete >>");
 		$stop;
