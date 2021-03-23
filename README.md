@@ -3,7 +3,7 @@
 
 ###Fixed point CORDIC implementation.
 
-### Top file calculates 0.5*X + X^2*cos((X-128)/128)
+### Top file calculates 0.5 * X + X^2 * cos((X - 128) / 128)
 
 
 
