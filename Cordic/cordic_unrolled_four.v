@@ -12,7 +12,7 @@ input [21:0] angle;
 output [21:0] cos_out;
 output reg done;
 
-reg state, done_reg;
+reg state, done_reg, d;
 reg [3:0] i;  //iterator
 reg signed [21:0] e_i, x, y, z, x_shifted, y_shifted, cos_out; //angle of iteration plus others...
 
