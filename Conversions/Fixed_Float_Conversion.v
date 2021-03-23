@@ -23,18 +23,18 @@ module Fixed_Float_Conversion(
     reg [23:0] mant_float;
     reg [4:0] counter;
 	 
-	 reg complete;
+	 //reg complete;
 
     assign {sign_fixed, fixed_val[20:0]} = data;
 
     always @ (posedge clk) begin
-		  if (complete) begin
-				done <= 1'b1;
-		  end
+		  //if (complete) begin
+			//	done = 1'b1;
+		  //end
         if (enable) begin
             if (fixed_val == 21'd0) begin
                 result = 32'b0;
-                complete <= 1'b1;
+                done <= 1'b1;
             end
             else begin
                 sign_float = sign_fixed;
@@ -50,9 +50,12 @@ module Fixed_Float_Conversion(
                 end
                 exp_float = exp_float - counter;
                 result = {sign_float, exp_float, mant_float[22:0]};
-                complete <= 1'b1;
+                done = 1'b1;
             end
         end
+		  else begin
+				done = 1'b0;
+		  end
     end
 
 endmodule

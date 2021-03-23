@@ -10,11 +10,10 @@ module cordic(
 input clk, clk_en, reset;
 input [21:0] angle;
 output [21:0] cos_out;
-output done;
+output reg done;
 
 reg state = 1'b0;
 reg state_next = 1'b0;
-reg done = 1'b0;
 reg [3:0] i, i_next;  //iterator
 reg [21:0] e_i, x, y, z, x_next, y_next, z_next, cos_out; //angle of iteration plus others...
 
@@ -77,20 +76,24 @@ always @* begin
 	 i_next = i;
 	 state_next = state;
     if(state)begin  //calculating section
-		  done = 1'b0;
+		  
         x_next = x + (d ? y_shifted : -y_shifted);
         y_next = y + (d ? -x_shifted : x_shifted);
         z_next = z + (d ? e_i : -e_i);
         i_next = i + 1;
         if(i == 4'd15) begin   //done 16 iterations
-				done = 1'b1;
-            state_next = 1'b0;
-				cos_out = x_next;
+				done <= 1'b1;
+            state_next <= 1'b0;
+				cos_out <= x_next;
         end
     end
+	 else begin
+		done <= 1'b0;
+	 end
 end
 
 
 endmodule
+
 
 

@@ -36,7 +36,8 @@ module Task6_Addr(
 	reg [23:0] tmp_mant_done;
 	
 	reg [4:0] counter;
-	reg complete;
+	//reg complete = 1'b0;
+	
 
 	// Split the different parts up for ease of use.
 
@@ -45,22 +46,22 @@ module Task6_Addr(
 	
 	
 	always @ (posedge clk) begin
-		if (complete) begin
-			done <= 1'b1;
-		end
+		//if (complete) begin
+		//	done <= 1'b1;
+		//end
 		if (enable) begin
 
 			if ({exp_a, mant_a} == 31'b0 && {exp_b, mant_b} == 31'b0) begin
 				result <= 32'b0;
-				complete <= 1'b1;
+				done <= 1'b1;
 			end
 			else if ({exp_a, mant_a} == 31'b0 && {exp_b, mant_b} != 31'b0) begin
 				result <= datab;
-				complete <= 1'b1;
+				done <= 1'b1;
 			end
 			else if ({exp_a, mant_a} != 31'b0 && {exp_b, mant_b} == 31'b0) begin
 				result <= dataa;
-				complete <= 1'b1;
+				done <= 1'b1;
 			end
 			else begin
 				if (exp_a > exp_b) begin
@@ -142,8 +143,11 @@ module Task6_Addr(
 				end
 				
 				result = {sign_sum, exp_sum, tmp_mant_done[22:0]};
-				complete <= 1'b1;
+				done <= 1'b1;
 			end
+		end
+		else begin
+			done <= 1'b0;
 		end
 	end
 endmodule
