@@ -14,7 +14,7 @@ module Task7_Cordic_top(
     clk,
     data,
     result,
-    start,
+    start
     );
 
     input clk;
