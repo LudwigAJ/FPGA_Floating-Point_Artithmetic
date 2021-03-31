@@ -3,12 +3,7 @@ module Task7_Cordic_top(
     dataa, // the value to be calculated
     datab, // the sum
     result,
-    start,
-    // for the testbench //
-    test_result_dataa,
-    test_enable_dataa,
-    test_enable_add
-    // for the testbench - end //
+    start
     );
 
 
@@ -16,12 +11,6 @@ module Task7_Cordic_top(
     input start;
     input [31:0] dataa, datab;
     output reg [31:0] result;
-
-    // For the testbench //
-    output [31:0] test_result_dataa;
-    output test_enable_dataa;
-    output test_enable_add;
-    // For the testbench - end //
 
     wire [31:0] result_wire;
 
@@ -32,12 +21,6 @@ module Task7_Cordic_top(
     reg enable_dataa_reg, enable_add_reg;
 
     assign result <= result_wire;
-
-    // For the testbench //
-    assign test_result_dataa = result_dataa_reg;
-    assign test_enable_dataa = enable_dataa;
-    assign test_enable_add = enable_add;
-    // For the testbench - end //
 
     always @ (posedge clk) begin
         if (enable_dataa) begin
