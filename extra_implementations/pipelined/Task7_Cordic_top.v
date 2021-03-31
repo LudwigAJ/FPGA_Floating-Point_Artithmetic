@@ -10,21 +10,22 @@
 // FIRST + SIXTH : SEVENTH
 // 4 MULT, 1 ADD, 1 SUB, 1 CORDIC 
 
-module Task7_Cordic_top_sub(
+module Task7_Cordic_top(
     clk,
     data,
     result,
-    start,
-    done
+    start
     );
 
     input clk;
     input start;
     input [31:0] data;
-    output reg [31:0] result;
-    output reg done;		
+    output [31:0] result;
+		
     // Constants //
-
+    //wire [31:0] point_five;
+    //wire [31:0] one_twenty_eight;
+    //wire [31:0] one_over_one_twenty_eight;
     parameter point_five = 32'b00111111000000000000000000000000; // 0.5
     parameter one_twenty_eight = 32'b01000011000000000000000000000000; //128.0
     parameter one_over_one_twenty_eight = 32'b00111100000000000000000000000000; // 1.0/128.0 = 0.0078125
@@ -57,7 +58,6 @@ module Task7_Cordic_top_sub(
     reg start_1, start_2, start_3;
 	 
 	always @ (posedge clk) begin
-        
 		if (start) begin
 			start_1 <= 1'b1;
 			start_2 <= 1'b1;
@@ -131,7 +131,6 @@ module Task7_Cordic_top_sub(
 			//result[31:0] = result_seventh_reg[31:0];
 			enable_8 <= 1'b0;
 			enable_1 <= 1'b0;
-            done <= enable_wire9; // this is for the new top module for x1 and x2 inputs.
 		end
 		//else if (enable_9) begin
 		//	enable_9 <= 1'b0;
