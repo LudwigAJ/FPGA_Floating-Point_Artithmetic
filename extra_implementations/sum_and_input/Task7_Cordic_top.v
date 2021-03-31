@@ -29,7 +29,7 @@ module Task7_Cordic_top(
         end
     end
 
-    Task7_Cordic_sub geoff_dataa(
+    Task7_Cordic_top_sub geoff_dataa(
         .clk(clk),
         .data(dataa),
         .result(result_dataa),
