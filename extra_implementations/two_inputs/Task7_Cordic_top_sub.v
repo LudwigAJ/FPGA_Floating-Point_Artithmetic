@@ -84,6 +84,8 @@ module Task7_Cordic_top_sub(
 			result_sixth_reg <= 32'b0;
 			result_seventh_reg <= 32'b0;
 			// NEW ADDED REMOVE IF IT BREAKS - END
+			
+			done <= 1'b0;
 	
 		end
 		else if (enable_wire3 & enable_wire2 & enable_wire1) begin
