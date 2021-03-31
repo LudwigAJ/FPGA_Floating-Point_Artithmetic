@@ -17,7 +17,7 @@ module Task7_Cordic_top(
     input clk;
     input start;
     input [31:0] dataa, datab;
-    output reg [31:0] result;
+    output wire [31:0] result;
 
     // For the testbench //
     output [31:0] test_result_dataa;
@@ -35,7 +35,7 @@ module Task7_Cordic_top(
     reg [31:0] result_dataa_reg, result_datab_reg;
     reg enable_dataa_reg, enable_datab_reg, enable_add_reg;
 
-    assign result <= result_wire;
+    assign result = result_wire;
 
     // For the testbench //
     assign test_result_dataa = result_dataa_reg;
@@ -46,6 +46,7 @@ module Task7_Cordic_top(
 
     assign test_enable_add = enable_add;
     // For the testbench - end //
+	
 
     always @ (posedge clk) begin
         if (enable_dataa && enable_datab) begin

@@ -20,7 +20,7 @@ module Task7_Cordic_top(
     reg [31:0] result_dataa_reg;
     reg enable_dataa_reg, enable_add_reg;
 
-    assign result <= result_wire;
+
 
     always @ (posedge clk) begin
         if (enable_dataa) begin
@@ -29,7 +29,7 @@ module Task7_Cordic_top(
         end
     end
 
-    Task7_Cordic_top_sub geoff_dataa(
+    Task7_Cordic_sub geoff_dataa(
         .clk(clk),
         .data(dataa),
         .result(result_dataa),
