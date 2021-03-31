@@ -44,9 +44,15 @@ reg [7:0] counter;
         ////////////////////////////////////////////
 
         else if (state) begin
-            counter = 8'd0; // init a counter to 0 to keep track of iters.
-            while (counter < 4) begin
-                if (i <= 15) begin // i.e. 16 iterations.
+            if (i >= 16) begin // we are now done.
+                cos_out = x; // this is the output.
+                done = 1'b1; // done signal.
+                state = 1'b0; // set state to 0 so we dont repeat ops.
+            end
+            else begin
+                counter = 8'd0; // init a counter to 0 to keep track of iters.
+                while (counter < 4 && i < 16) begin // i.e. 16 iterations.
+
                     d = z[21]; // check if pos/neg value of angle.
                     x_shifted = x >>> i; // multiply (signed) by 2^i.
                     y_shifted = y >>> i; // multiply (signed) by 2^i.
@@ -69,19 +75,25 @@ reg [7:0] counter;
                         4'd14 : e_i = 22'h0003F;
                         4'd15 : e_i = 22'h0001F;
                     endcase
-
-                    x = x + (d ? y_shifted : -y_shifted); // shift x by y-shifted.
-                    y = y + (d ? -x_shifted : x_shifted); // shift y by x-shifted.
-                    z = z + (d ? e_i : -e_i); // determine if pos/neg angle now.
-                    i = i + 5'd1; //increment step
 						  
-						if (i == 16) begin // we are now done.
-						    cos_out = x; // this is the output.
-							done = 1'b1; // done signal.
-							state = 1'b0; // set state to 0 so we dont repeat ops.
-						end
+					if (d) begin
+                        x = x + y_shifted;
+                        y = y - x_shifted;
+                        z = z + e_i;
 					end
-                counter = counter + 8'b1;
+					else begin
+                        x = x - y_shifted;
+                        y = y + x_shifted;
+                        z = z - e_i;
+				    end
+
+                    //x = x + (d ? y_shifted : -y_shifted); // shift x by y-shifted.
+                    //y = y + (d ? -x_shifted : x_shifted); // shift y by x-shifted.
+                    //z = z + (d ? e_i : -e_i); // determine if pos/neg angle now.
+                    i = i + 1'b1; //increment step  
+
+                    counter = counter + 1'b1;
+                end
             end
         end
         else begin
