@@ -33,7 +33,7 @@ module Task7_Cordic_top(
         end
     end
 
-    Task7_Cordic_sub geoff_dataa(
+    Task7_Cordic_top_sub geoff_dataa(
         .clk(clk),
         .data(dataa),
         .result(result_dataa),
@@ -41,7 +41,7 @@ module Task7_Cordic_top(
         .done(enable_dataa)
         );
        
-    Task7_Cordic_sub geoff_datab(
+    Task7_Cordic_top_sub geoff_datab(
         .clk(clk),
         .data(datab),
         .result(result_datab),
