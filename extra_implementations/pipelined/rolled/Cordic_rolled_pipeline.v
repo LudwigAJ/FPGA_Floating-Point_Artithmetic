@@ -3,34 +3,34 @@ module Cordic_rolled_pipeline(
     enable, // enable our whole chip to start
     reset, // active high
     angle_in, // input
-    cos_out, // output
+    cos_out // output
     );
 
     input clk, enable, reset;
-    output empty;
 
     input [21:0] angle_in;
     output reg signed [21:0] cos_out;
+	
 
     // make the 17 different stages of the pipeline for x, y, and z.
-    reg signed [21:0] x_stage_1, x_stage_2, x_stage_3, x_stage_4, x_stage_5, x_stage_6, x_stage_7, x_stage_8, 
+    reg signed [21:0] x_stage_1, x_stage_2, x_stage_3, x_stage_4, x_stage_5, x_stage_6, x_stage_7, x_stage_8; 
     reg signed [21:0] x_stage_9, x_stage_10, x_stage_11, x_stage_12, x_stage_13, x_stage_14, x_stage_15, x_stage_16, x_stage_17;
 
-    reg signed [21:0] y_stage_1, y_stage_2, y_stage_3, y_stage_4, y_stage_5, y_stage_6, y_stage_7, y_stage_8, 
+    reg signed [21:0] y_stage_1, y_stage_2, y_stage_3, y_stage_4, y_stage_5, y_stage_6, y_stage_7, y_stage_8; 
     reg signed [21:0] y_stage_9, y_stage_10, y_stage_11, y_stage_12, y_stage_13, y_stage_14, y_stage_15, y_stage_16, y_stage_17;
 
-    reg signed [21:0] z_stage_1, z_stage_2, z_stage_3, z_stage_4, z_stage_5, z_stage_6, z_stage_7, z_stage_8, 
+    reg signed [21:0] z_stage_1, z_stage_2, z_stage_3, z_stage_4, z_stage_5, z_stage_6, z_stage_7, z_stage_8; 
     reg signed [21:0] z_stage_9, z_stage_10, z_stage_11, z_stage_12, z_stage_13, z_stage_14, z_stage_15, z_stage_16, z_stage_17;
 
     // d_1, d_2, ... are the MSB (or the sign-bit) of each z_stage.
     wire d_1, d_2, d_3, d_4, d_5, d_6, d_7, d_8, d_9, d_10, d_11, d_12, d_13, d_14, d_15, d_16;
 
     // here was have some wire corresponding to arithmetic right shifts of resp. stage.
-    wire x_shifted_1, x_shifted_2, x_shifted_3, x_shifted_4, x_shifted_5, x_shifted_6, x_shifted_7, x_shifted_8;
-    wire x_shifted_9, x_shifted_10, x_shifted_11, x_shifted_12, x_shifted_13, x_shifted_14, x_shifted_15, x_shifted_16;
+    wire [21:0] x_shifted_1, x_shifted_2, x_shifted_3, x_shifted_4, x_shifted_5, x_shifted_6, x_shifted_7, x_shifted_8;
+    wire [21:0] x_shifted_9, x_shifted_10, x_shifted_11, x_shifted_12, x_shifted_13, x_shifted_14, x_shifted_15, x_shifted_16;
 
-    wire y_shifted_1, y_shifted_2, y_shifted_3, y_shifted_4, y_shifted_5, y_shifted_6, y_shifted_7, y_shifted_8;
-    wire y_shifted_9, y_shifted_10, y_shifted_11, y_shifted_12, y_shifted_13, y_shifted_14, y_shifted_15, y_shifted_16;
+    wire [21:0] y_shifted_1, y_shifted_2, y_shifted_3, y_shifted_4, y_shifted_5, y_shifted_6, y_shifted_7, y_shifted_8;
+    wire [21:0] y_shifted_9, y_shifted_10, y_shifted_11, y_shifted_12, y_shifted_13, y_shifted_14, y_shifted_15, y_shifted_16;
 
     // assign the values for the shift wires.
     assign x_shifted_1 = x_stage_1 >>> 1;
