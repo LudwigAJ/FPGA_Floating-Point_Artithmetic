@@ -192,7 +192,7 @@ module Task7_Cordic_top_sub(
 	 
     reg geoff_reset = 1'b0;
 
-    cordic_unrolled geoff(
+    cordic_unrolled_four_loop geoff(
         .clk(clk),
         .clk_en(enable_5),
         .reset(geoff_reset), //active-high
