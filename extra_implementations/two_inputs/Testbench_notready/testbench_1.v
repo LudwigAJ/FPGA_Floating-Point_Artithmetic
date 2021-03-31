@@ -2,57 +2,38 @@
 module tb ();
 
 	//Inputs to DUT are reg type
-	reg [31:0] data;
+	reg [31:0] dataa;
+	reg [31:0] datab;
 	reg clk;
 	
 	reg start;
 	//Output from DUT is wire type
 	wire [31:0] result;
 	
-	wire [31:0] result1;
-	wire [31:0] result2;
-	wire [31:0] result3;
-	wire [31:0] result4;
-	wire [21:0] result5;
-	wire [21:0] result6;
-	wire [31:0] result7;
-	wire [31:0] result8;
+	wire [31:0] result_dataa;
+	wire [31:0] result_datab;
+
 	
-	wire enable1;
-	wire enable2;
-	wire enable3;
-	wire enable4;
-	wire enable5;
-	wire enable6;
-	wire enable7;
-	wire enable8;
-	wire enable9;
+	wire enable_dataa;
+	wire enable_datab;
+	wire enable_add;
 
 	//Instantiate the DUT
 	//mul refers to the verilog module defined by the LPM_MULT ip
 	Task7_Cordic_top unit(
 		.clk(clk),
-		.data(data),
-		.start(start),
+		.dataa(dataa),
+		.datab(datab),
 		.result(result),
-		.result1(result1),
-		.result2(result2),
-		.result3(result3),
-		.result4(result4),
-		.result5(result5),
-	   .result6(result6),
-		.result7(result7),
-		.result8(result8),
-		.enable1(enable1),
-	   .enable2(enable2),
-	   .enable3(enable3),
-	   .enable4(enable4),
-	   .enable5(enable5),
-	   .enable6(enable6),
-	   .enable7(enable7),
-	   .enable8(enable8),
-	   .enable9(enable9)
-	);
+		.start(start),
+		// for the testbench //
+		.test_result_dataa(result_dataa),
+		.test_result_datab(result_datab),
+		.test_enable_dataa(enable_dataa),
+		.test_enable_datab(enable_datab),
+		.test_enable_add(enable_add)
+		// for the testbench - end //
+    );
 
 	// ---- If a clock is required, see below ----
 	// //Create a 50MHz clock
@@ -74,7 +55,8 @@ module tb ();
 		
 		@(posedge clk);
 	
-		data <= 32'b01000011011111110000000000000000;  // 10.0
+		dataa <= 32'b01000011011111110000000000000000;  // 255.0
+		datab <= 32'b01000011000000000000000000000000; // 128.0
 		
 		#20
 		
