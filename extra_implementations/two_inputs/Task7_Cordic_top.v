@@ -10,7 +10,7 @@ module Task7_Cordic_top(
     input clk;
     input start;
     input [31:0] dataa, datab;
-    output reg [31:0] result;
+    output [31:0] result;
     
 
     wire [31:0] result_wire;
@@ -21,7 +21,7 @@ module Task7_Cordic_top(
     reg [31:0] result_dataa_reg, result_datab_reg;
     reg enable_dataa_reg, enable_datab_reg, enable_add_reg;
 
-    assign result <= result_wire;
+    assign result = result_wire;
 
 
     always @ (posedge clk) begin
@@ -33,7 +33,7 @@ module Task7_Cordic_top(
         end
     end
 
-    Task7_Cordic_sub geoff_dataa(
+    Task7_Cordic_top_sub geoff_dataa(
         .clk(clk),
         .data(dataa),
         .result(result_dataa),
@@ -41,7 +41,7 @@ module Task7_Cordic_top(
         .done(enable_dataa)
         );
        
-    Task7_Cordic_sub geoff_datab(
+    Task7_Cordic_top_sub geoff_datab(
         .clk(clk),
         .data(datab),
         .result(result_datab),

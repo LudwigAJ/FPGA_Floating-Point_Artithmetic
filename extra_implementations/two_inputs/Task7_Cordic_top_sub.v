@@ -84,6 +84,8 @@ module Task7_Cordic_top_sub(
 			result_sixth_reg <= 32'b0;
 			result_seventh_reg <= 32'b0;
 			// NEW ADDED REMOVE IF IT BREAKS - END
+			
+			done <= 1'b0;
 	
 		end
 		else if (enable_wire3 & enable_wire2 & enable_wire1) begin
@@ -128,7 +130,7 @@ module Task7_Cordic_top_sub(
 		else if (enable_wire9) begin
 			enable_9 <= enable_wire9;
 			result_seventh_reg <= result_seventh[31:0];
-			//result[31:0] = result_seventh_reg[31:0];
+			result[31:0] <= result_seventh[31:0];
 			enable_8 <= 1'b0;
 			enable_1 <= 1'b0;
             done <= enable_wire9; // this is for the new top module for x1 and x2 inputs.
@@ -140,7 +142,7 @@ module Task7_Cordic_top_sub(
 	
 	// checking //
 	
-	assign result[31:0] = result_seventh_reg[31:0];
+	//assign result[31:0] = result_seventh_reg[31:0];
 	
 	// checking - end //
 	
