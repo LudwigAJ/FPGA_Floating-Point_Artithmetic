@@ -99,7 +99,7 @@ reg [7:0] counter;
             end
         end
         else begin
-            done <= 1'b0;
+            done = 1'b0;
         end
     end
 endmodule
