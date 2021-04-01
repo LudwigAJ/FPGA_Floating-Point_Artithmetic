@@ -11,11 +11,11 @@ module tb ();
 	wire [31:0] result;
 	
 	wire [31:0] result_dataa;
-	wire [31:0] result_datab;
+	//wire [31:0] result_datab;
 
 	
 	wire enable_dataa;
-	wire enable_datab;
+	//wire enable_datab;
 	wire enable_add;
 
 	//Instantiate the DUT
