@@ -218,7 +218,6 @@ module Cordic_unrolled_two_pipeline(
             z_stage_17 = 22'b0;
         end
         if (enable) begin
-            counter = 8'b0;
             x_stage_1 = 22'b10011011011101001110;
             y_stage_1 = 22'd0;
             z_stage_1 = angle_in;
