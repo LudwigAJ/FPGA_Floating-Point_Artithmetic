@@ -23,7 +23,7 @@ module Task8_Cordic_top_sub(
     input [31:0] data;
     output [31:0] result;
 	 
-    output reg done;
+	 output reg done;
 		
     // Constants //
     //wire [31:0] point_five;
