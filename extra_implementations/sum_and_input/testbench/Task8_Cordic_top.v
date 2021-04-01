@@ -21,6 +21,8 @@ module Task8_Cordic_top(
 
     wire [31:0] result_dataa;
     wire enable_dataa, enable_add;
+	 
+	 reg done;
 
     reg [31:0] result_dataa_reg;
     reg enable_dataa_reg, enable_add_reg;
@@ -39,13 +41,21 @@ module Task8_Cordic_top(
 
 
     always @ (posedge clk) begin
-        if (enable_dataa) begin
+		  if (start) begin
+			   result_dataa_reg <= 32'b0;
+				enable_dataa_reg <= 1'b0;
+				enable_add_reg <= 1'b0;
+				done <= 1'b0;
+		  end
+        else if (enable_dataa & !enable_add_reg & !done) begin
             result_dataa_reg <= result_dataa;
             enable_add_reg <= 1'b1;
         end
-        else if (enable_add) begin
-            enable_add_reg <= 1'b0;
-        end
+		  else if (enable_add & !done) begin
+				result <= result_wire;
+			   enable_add_reg <= 1'b0;
+				done <= 1'b1;
+		  end
     end
 
     Task8_Cordic_top_sub geoff(
@@ -67,3 +77,4 @@ module Task8_Cordic_top(
         );    
 
 endmodule
+
