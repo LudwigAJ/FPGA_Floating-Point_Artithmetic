@@ -116,9 +116,10 @@ module Task7_Cordic_top(
 			result_sixth_reg <= 32'b0;
 			result_seventh_reg <= 32'b0;
 			// NEW ADDED REMOVE IF IT BREAKS - END
+		
 	
 		end
-		else if (enable_wire3 & enable_wire2 & enable_wire1) begin
+		else if (enable_wire3 & enable_wire2 & enable_wire1 & !enable_1 & !enable_2 & !enable_3) begin
 			enable_1 <= enable_wire1;
 			enable_2 <= enable_wire2;
 			enable_3 <= enable_wire3;
@@ -131,33 +132,33 @@ module Task7_Cordic_top(
 			start_2 <= 1'b0;
 			start_1 <= 1'b0;
 		end
-		else if (enable_wire4) begin
+		else if (enable_wire4 & !enable_4) begin
 			enable_4 <= enable_wire4;
 			result_fourth_reg <= result_fourth;
 			enable_3 <= 1'b0;
 		end
-		else if (enable_wire5) begin
+		else if (enable_wire5 & !enable_5) begin
 			enable_5 <= enable_wire5;
 			result_fourth_fixed_reg <= result_fourth_fixed;
 			enable_4 <= 1'b0;
 		end
-		else if (enable_wire6) begin
+		else if (enable_wire6 & !enable_6) begin
 			enable_6 <= enable_wire6;
 			result_fifth_reg <= result_fifth;
 			enable_5 <= 1'b0;
 		end
-		else if (enable_wire7) begin
+		else if (enable_wire7 & !enable_7) begin
 			enable_7 <= enable_wire7;
 			result_fifth_fixed_reg <= result_fifth_fixed;
 			enable_6 <= 1'b0;
 		end
-		else if (enable_wire8) begin
+		else if (enable_wire8 & !enable_8) begin
 			enable_8 <= enable_wire8;
 			result_sixth_reg <= result_sixth;
 			enable_7 <= 1'b0;
 			enable_2 <= 1'b0;
 		end
-		else if (enable_wire9) begin
+		else if (enable_wire9 & !enable_9) begin
 			enable_9 <= enable_wire9;
 			result_seventh_reg <= result_seventh[31:0];
 			//result[31:0] = result_seventh_reg[31:0];
@@ -239,7 +240,7 @@ module Task7_Cordic_top(
 	 //reg [21:0]geoff_result;
 	 
 
-    cordic_unrolled geoff(
+    cordic_unrolled_four_loop geoff(
         .clk(clk),
         .clk_en(enable_5),
         .reset(geoff_reset), //active-high
