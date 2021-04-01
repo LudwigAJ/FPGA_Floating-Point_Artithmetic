@@ -133,7 +133,7 @@ module Task7_Cordic_top(
 		end
 		else if (enable_9) begin
 			enable_9 <= 1'b0;
-			result[31:0] = result_seventh_reg[31:0];
+			result[31:0] <= result_seventh_reg[31:0];
         end
 	end
 	
