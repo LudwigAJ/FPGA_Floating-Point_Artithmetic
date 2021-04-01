@@ -20,7 +20,7 @@ module Task7_Cordic_top(
     input clk;
     input start;
     input [31:0] data;
-    output [31:0] result;
+    output reg [31:0] result;
 		
     // Constants //
     //wire [31:0] point_five;
@@ -127,19 +127,19 @@ module Task7_Cordic_top(
 		end
 		else if (enable_wire9 & !enable_9) begin
 			enable_9 <= enable_wire9;
-			result_seventh_reg <= result_seventh[31:0];
-			//result[31:0] = result_seventh_reg[31:0];
+			result_seventh_reg <= result_seventh[31:0];	
 			enable_8 <= 1'b0;
 			enable_1 <= 1'b0;
 		end
 		else if (enable_9) begin
 			enable_9 <= 1'b0;
+			result[31:0] <= result_seventh_reg[31:0];
         end
 	end
 	
 	// checking //
 	
-	assign result[31:0] = result_seventh_reg[31:0];
+	//assign result[31:0] = result_seventh_reg[31:0];
 	
 	// checking - end //
 	
