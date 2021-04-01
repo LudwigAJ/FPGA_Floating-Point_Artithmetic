@@ -37,6 +37,7 @@ reg [7:0] counter;
             y = 22'd0;
             z = angle[20:0];
             state = 1'b1;
+            done = 1'b0;
         end
 
         ////////////////////////////////////////////
@@ -51,6 +52,7 @@ reg [7:0] counter;
             end
             else begin
                 counter = 8'd0; // init a counter to 0 to keep track of iters.
+                done = 1'b0;
                 while (counter < 4 && i < 16) begin // i.e. 16 iterations.
 
                     d = z[21]; // check if pos/neg value of angle.
@@ -97,7 +99,7 @@ reg [7:0] counter;
             end
         end
         else begin
-            done = 1'b0;
+            done <= 1'b0;
         end
     end
 endmodule
