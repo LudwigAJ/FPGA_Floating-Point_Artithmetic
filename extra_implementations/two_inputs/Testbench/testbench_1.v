@@ -20,7 +20,7 @@ module tb ();
 
 	//Instantiate the DUT
 	//mul refers to the verilog module defined by the LPM_MULT ip
-	Task7_Cordic_top unit(
+	Task8_Cordic_top unit(
 		.clk(clk),
 		.dataa(dataa),
 		.datab(datab),
