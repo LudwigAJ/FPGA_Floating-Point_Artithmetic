@@ -37,13 +37,15 @@ module Cordic_unrolled_four_pipeline(
 
     reg [7:0] counter;
 
-    reg signed [21:0] x_stage_1, x_stage_2, x_stage_3, x_stage_4, x_stage_5, x_stage_6, x_stage_7, x_stage_8; 
+    reg signed [21:0] x_stage_1, y_stage_1, z_stage_1;
+
+    reg signed [21:0] x_stage_2, x_stage_3, x_stage_4, x_stage_5, x_stage_6, x_stage_7, x_stage_8; 
     reg signed [21:0] x_stage_9, x_stage_10, x_stage_11, x_stage_12, x_stage_13, x_stage_14, x_stage_15, x_stage_16, x_stage_17;
 
-    reg signed [21:0] y_stage_1, y_stage_2, y_stage_3, y_stage_4, y_stage_5, y_stage_6, y_stage_7, y_stage_8; 
+    reg signed [21:0] y_stage_2, y_stage_3, y_stage_4, y_stage_5, y_stage_6, y_stage_7, y_stage_8; 
     reg signed [21:0] y_stage_9, y_stage_10, y_stage_11, y_stage_12, y_stage_13, y_stage_14, y_stage_15, y_stage_16, y_stage_17;
 
-    reg signed [21:0] z_stage_1, z_stage_2, z_stage_3, z_stage_4, z_stage_5, z_stage_6, z_stage_7, z_stage_8; 
+    reg signed [21:0] z_stage_2, z_stage_3, z_stage_4, z_stage_5, z_stage_6, z_stage_7, z_stage_8; 
     reg signed [21:0] z_stage_9, z_stage_10, z_stage_11, z_stage_12, z_stage_13, z_stage_14, z_stage_15, z_stage_16, z_stage_17;
 
     // d_1, d_2, ... are the MSB (or the sign-bit) of each z_stage.
@@ -123,6 +125,8 @@ module Cordic_unrolled_four_pipeline(
     assign d_15 = z_stage_15[21];
     assign d_16 = z_stage_16[21];
 
+    
+
     // for the testbench //
 	 assign stage_1 = x_stage_1;
 	 assign stage_2 = x_stage_2;
@@ -145,263 +149,262 @@ module Cordic_unrolled_four_pipeline(
 
     always @ (posedge clk) begin
         if (reset) begin
-            x_stage_1 <= 22'b0;
-            y_stage_1 <= 22'b0;
-            z_stage_1 <= 22'b0;
+            x_stage_1 = 22'b0;
+            y_stage_1 = 22'b0;
+            z_stage_1 = 22'b0;
 
-            x_stage_2 <= 22'b0;
-            y_stage_2 <= 22'b0;
-            z_stage_2 <= 22'b0;
+            x_stage_2 = 22'b0;
+            y_stage_2 = 22'b0;
+            z_stage_2 = 22'b0;
 
-            x_stage_3 <= 22'b0;
-            y_stage_3 <= 22'b0;
-            z_stage_3 <= 22'b0;
+            x_stage_3 = 22'b0;
+            y_stage_3 = 22'b0;
+            z_stage_3 = 22'b0;
 
-            x_stage_4 <= 22'b0;
-            y_stage_4 <= 22'b0;
-            z_stage_4 <= 22'b0;
+            x_stage_4 = 22'b0;
+            y_stage_4 = 22'b0;
+            z_stage_4 = 22'b0;
 
-            x_stage_5 <= 22'b0;
-            y_stage_5 <= 22'b0;
-            z_stage_5 <= 22'b0;
+            x_stage_5 = 22'b0;
+            y_stage_5 = 22'b0;
+            z_stage_5 = 22'b0;
 
-            x_stage_6 <= 22'b0;
-            y_stage_6 <= 22'b0;
-            z_stage_6 <= 22'b0;
+            x_stage_6 = 22'b0;
+            y_stage_6 = 22'b0;
+            z_stage_6 = 22'b0;
 
-            x_stage_7 <= 22'b0;
-            y_stage_7 <= 22'b0;
-            z_stage_7 <= 22'b0;
+            x_stage_7 = 22'b0;
+            y_stage_7 = 22'b0;
+            z_stage_7 = 22'b0;
 
-            x_stage_8 <= 22'b0;
-            y_stage_8 <= 22'b0;
-            z_stage_8 <= 22'b0;
+            x_stage_8 = 22'b0;
+            y_stage_8 = 22'b0;
+            z_stage_8 = 22'b0;
 
-            x_stage_9 <= 22'b0;
-            y_stage_9 <= 22'b0;
-            z_stage_9 <= 22'b0;
+            x_stage_9 = 22'b0;
+            y_stage_9 = 22'b0;
+            z_stage_9 = 22'b0;
 
-            x_stage_10 <= 22'b0;
-            y_stage_10 <= 22'b0;
-            z_stage_10 <= 22'b0;
+            x_stage_10 = 22'b0;
+            y_stage_10 = 22'b0;
+            z_stage_10 = 22'b0;
 
-            x_stage_11 <= 22'b0;
-            y_stage_11 <= 22'b0;
-            z_stage_11 <= 22'b0;
+            x_stage_11 = 22'b0;
+            y_stage_11 = 22'b0;
+            z_stage_11 = 22'b0;
 
-            x_stage_12 <= 22'b0;
-            y_stage_12 <= 22'b0;
-            z_stage_12 <= 22'b0;
+            x_stage_12 = 22'b0;
+            y_stage_12 = 22'b0;
+            z_stage_12 = 22'b0;
 
-            x_stage_13 <= 22'b0;
-            y_stage_13 <= 22'b0;
-            z_stage_13 <= 22'b0;
+            x_stage_13 = 22'b0;
+            y_stage_13 = 22'b0;
+            z_stage_13 = 22'b0;
 
-            x_stage_14 <= 22'b0;
-            y_stage_14 <= 22'b0;
-            z_stage_14 <= 22'b0;
+            x_stage_14 = 22'b0;
+            y_stage_14 = 22'b0;
+            z_stage_14 = 22'b0;
 
-            x_stage_15 <= 22'b0;
-            y_stage_15 <= 22'b0;
-            z_stage_15 <= 22'b0;
+            x_stage_15 = 22'b0;
+            y_stage_15 = 22'b0;
+            z_stage_15 = 22'b0;
 
-            x_stage_16 <= 22'b0;
-            y_stage_16 <= 22'b0;
-            z_stage_16 <= 22'b0;
+            x_stage_16 = 22'b0;
+            y_stage_16 = 22'b0;
+            z_stage_16 = 22'b0;
 
-            x_stage_17 <= 22'b0;
-            y_stage_17 <= 22'b0;
-            z_stage_17 <= 22'b0;
+            x_stage_17 = 22'b0;
+            y_stage_17 = 22'b0;
+            z_stage_17 = 22'b0;
         end
         if (enable) begin
             counter = 8'b0;
-
             x_stage_1 = 22'b10011011011101001110;
             y_stage_1 = 22'd0;
             z_stage_1 = angle_in;
-
-            if (d_1) begin
-                x_stage_2 = x_stage_1 + y_shifted_1;
-                y_stage_2 = y_stage_1 - x_shifted_1;
-                z_stage_2 = z_stage_1 + 22'hC90FD;
-            end
-            else begin
-                x_stage_2 = x_stage_1 - y_shifted_1;
-                y_stage_2 = y_stage_1 + x_shifted_1;
-                z_stage_2 = z_stage_1 - 22'hC90FD;
-            end
-
-            if (d_2) begin
-                x_stage_3 = x_stage_2 + y_shifted_2;
-                y_stage_3 = y_stage_2 - x_shifted_2;
-                z_stage_3 = z_stage_2 + 22'h76B19;
-            end
-            else begin
-                x_stage_3 = x_stage_2 - y_shifted_2;
-                y_stage_3 = y_stage_2 + x_shifted_2;
-                z_stage_3 = z_stage_2 - 22'h76B19;
-            end
-
-            ////////////////////////////////////
-
-            if (d_4) begin
-                x_stage_5 = x_stage_4 + y_shifted_4;
-                y_stage_5 = y_stage_4 - x_shifted_4;
-                z_stage_5 = z_stage_4 + 22'h1FD5B;
-            end
-            else begin
-                x_stage_5 = x_stage_4 - y_shifted_4;
-                y_stage_5 = y_stage_4 + x_shifted_4;
-                z_stage_5 = z_stage_4 - 22'h1FD5B;
-            end    
             
-            if (d_5) begin
-                x_stage_6 = x_stage_5 + y_shifted_5;
-                y_stage_6 = y_stage_5 - x_shifted_5;
-                z_stage_6 = z_stage_5 + 22'h0FFAA;
-            end
-            else begin
-                x_stage_6 = x_stage_5 - y_shifted_5;
-                y_stage_6 = y_stage_5 + x_shifted_5;
-                z_stage_6 = z_stage_5 - 22'h0FFAA;
-            end
-            
-            if (d_6) begin
-                x_stage_7 = x_stage_6 + y_shifted_6;
-                y_stage_7 = y_stage_6 - x_shifted_6;
-                z_stage_7 = z_stage_6 + 22'h07FF5;
-            end
-            else begin
-                x_stage_7 = x_stage_6 - y_shifted_6;
-                y_stage_7 = y_stage_6 + x_shifted_6;
-                z_stage_7 = z_stage_6 - 22'h07FF5;
-            end
-                
-            ///////////////////////////////////////
-            
-            if (d_8) begin
-                x_stage_9 = x_stage_8 + y_shifted_8;
-                y_stage_9 = y_stage_8 - x_shifted_8;
-                z_stage_9 = z_stage_8 + 22'h01FFF;
-            end
-            else begin
-                x_stage_9 = x_stage_8 - y_shifted_8;
-                y_stage_9 = y_stage_8 + x_shifted_8;
-                z_stage_9 = z_stage_8 - 22'h01FFF;
-            end
-
-            if (d_9) begin
-                x_stage_10 = x_stage_9 + y_shifted_9;
-                y_stage_10 = y_stage_9 - x_shifted_9;
-                z_stage_10 = z_stage_9 + 22'h00FFF;
-            end
-            else begin
-                x_stage_10 = x_stage_9 - y_shifted_9;
-                y_stage_10 = y_stage_9 + x_shifted_9;
-                z_stage_10 = z_stage_9 - 22'h00FFF;
-            end
-
-            if (d_10) begin
-                x_stage_11 = x_stage_10 + y_shifted_10;
-                y_stage_11 <= y_stage_10 - x_shifted_10;
-                z_stage_11 <= z_stage_10 + 22'h007FF;
-            end
-            else begin
-                x_stage_11 = x_stage_10 - y_shifted_10;
-                y_stage_11 = y_stage_10 + x_shifted_10;
-                z_stage_11 = z_stage_10 - 22'h007FF;
-            end
-
-            ///////////////////////////////////////
-
-            if (d_12) begin
-                x_stage_13 <= x_stage_12 + y_shifted_12;
-                y_stage_13 <= y_stage_12 - x_shifted_12;
-                z_stage_13 <= z_stage_12 + 22'h001FF;
-            end
-            else begin
-                x_stage_13 <= x_stage_12 - y_shifted_12;
-                y_stage_13 <= y_stage_12 + x_shifted_12;
-                z_stage_13 <= z_stage_12 - 22'h001FF;
-            end
-
-            if (d_13) begin
-                x_stage_14 <= x_stage_13 + y_shifted_13;
-                y_stage_14 <= y_stage_13 - x_shifted_13;
-                z_stage_14 <= z_stage_13 + 22'h000FF;
-            end
-            else begin
-                x_stage_14 <= x_stage_13 - y_shifted_13;
-                y_stage_14 <= y_stage_13 + x_shifted_13;
-                z_stage_14 <= z_stage_13 - 22'h000FF;
-            end
-
-            if (d_14) begin
-                x_stage_15 <= x_stage_14 + y_shifted_14;
-                y_stage_15 <= y_stage_14 - x_shifted_14;
-                z_stage_15 <= z_stage_14 + 22'h0007F;
-            end
-            else begin
-                x_stage_15 <= x_stage_14 - y_shifted_14;
-                y_stage_15 <= y_stage_14 + x_shifted_14;
-                z_stage_15 <= z_stage_14 - 22'h0007F;
-            end
-
-            ///////////////////////////////////////
-
-            if (d_11) begin
-                x_stage_12 <= x_stage_11 + y_shifted_11;
-                y_stage_12 <= y_stage_11 - x_shifted_11;
-                z_stage_12 <= z_stage_11 + 22'h003FF;
-            end
-            else begin
-                x_stage_12 <= x_stage_11 - y_shifted_11;
-                y_stage_12 <= y_stage_11 + x_shifted_11;
-                z_stage_12 <= z_stage_11 - 22'h003FF;
-            end
-
-            
-            if (d_3) begin
-                x_stage_4 <= x_stage_3 + y_shifted_3;
-                y_stage_4 <= y_stage_3 - x_shifted_3;
-                z_stage_4 <= z_stage_3 + 22'h3EB6E;
-            end
-            else begin
-                x_stage_4 <= x_stage_3 - y_shifted_3;
-                y_stage_4 <= y_stage_3 + x_shifted_3;
-                z_stage_4 <= z_stage_3 - 22'h3EB6E;
-            end
-                
-
-
-                // stage 1 //
-                if (d_7) begin
-                    x_stage_8 <= x_stage_7 + y_shifted_7;
-                    y_stage_8 <= y_stage_7 - x_shifted_7;
-                    z_stage_8 <= z_stage_7 + 22'h03FFE;
+            while (counter < 4) begin
+                if (counter == 0) begin
+                    if (d_1) begin
+                        x_stage_2 = x_stage_1 + y_shifted_1;
+                        y_stage_2 = y_stage_1 - x_shifted_1;
+                        z_stage_2 = z_stage_1 + 22'hC90FD;
+                    end
+                    else begin
+                        x_stage_2 = x_stage_1 - y_shifted_1;
+                        y_stage_2 = y_stage_1 + x_shifted_1;
+                        z_stage_2 = z_stage_1 - 22'hC90FD;
+                    end
+                    //
+                    if (d_5) begin
+                        x_stage_6 = x_stage_5 + y_shifted_5;
+                        y_stage_6 = y_stage_5 - x_shifted_5;
+                        z_stage_6 = z_stage_5 + 22'h0FFAA;
+                    end
+                    else begin
+                        x_stage_6 = x_stage_5 - y_shifted_5;
+                        y_stage_6 = y_stage_5 + x_shifted_5;
+                        z_stage_6 = z_stage_5 - 22'h0FFAA;
+                    end
+                    //
+                    if (d_9) begin
+                        x_stage_10 = x_stage_9 + y_shifted_9;
+                        y_stage_10 = y_stage_9 - x_shifted_9;
+                        z_stage_10 = z_stage_9 + 22'h00FFF;
+                    end
+                    else begin
+                        x_stage_10 = x_stage_9 - y_shifted_9;
+                        y_stage_10 = y_stage_9 + x_shifted_9;
+                        z_stage_10 = z_stage_9 - 22'h00FFF;
+                    end
+                    //
+                    if (d_13) begin
+                        x_stage_14 = x_stage_13 + y_shifted_13;
+                        y_stage_14 = y_stage_13 - x_shifted_13;
+                        z_stage_14 = z_stage_13 + 22'h000FF;
+                    end
+                    else begin
+                        x_stage_14 = x_stage_13 - y_shifted_13;
+                        y_stage_14 = y_stage_13 + x_shifted_13;
+                        z_stage_14 = z_stage_13 - 22'h000FF;
+                    end
                 end
-                else begin
-                    x_stage_8 <= x_stage_7 - y_shifted_7;
-                    y_stage_8 <= y_stage_7 + x_shifted_7;
-                    z_stage_8 <= z_stage_7 - 22'h03FFE;
+                if (counter == 1) begin
+                    if (d_2) begin
+                        x_stage_3 = x_stage_2 + y_shifted_2;
+                        y_stage_3 = y_stage_2 - x_shifted_2;
+                        z_stage_3 = z_stage_2 + 22'h76B19;
+                    end
+                    else begin
+                        x_stage_3 = x_stage_2 - y_shifted_2;
+                        y_stage_3 = y_stage_2 + x_shifted_2;
+                        z_stage_3 = z_stage_2 - 22'h76B19;
+                    end
+                    //
+                    if (d_6) begin
+                        x_stage_7 = x_stage_6 + y_shifted_6;
+                        y_stage_7 = y_stage_6 - x_shifted_6;
+                        z_stage_7 = z_stage_6 + 22'h07FF5;
+                    end
+                    else begin
+                        x_stage_7 = x_stage_6 - y_shifted_6;
+                        y_stage_7 = y_stage_6 + x_shifted_6;
+                        z_stage_7 = z_stage_6 - 22'h07FF5;
+                    end
+                    //
+                    if (d_10) begin
+                        x_stage_11 = x_stage_10 + y_shifted_10;
+                        y_stage_11 = y_stage_10 - x_shifted_10;
+                        z_stage_11 = z_stage_10 + 22'h007FF;
+                    end
+                    else begin
+                        x_stage_11 = x_stage_10 - y_shifted_10;
+                        y_stage_11 = y_stage_10 + x_shifted_10;
+                        z_stage_11 = z_stage_10 - 22'h007FF;
+                    end
+                    //
+                    if (d_14) begin
+                        x_stage_15 = x_stage_14 + y_shifted_14;
+                        y_stage_15 = y_stage_14 - x_shifted_14;
+                        z_stage_15 = z_stage_14 + 22'h0007F;
+                    end
+                    else begin
+                        x_stage_15 = x_stage_14 - y_shifted_14;
+                        y_stage_15 = y_stage_14 + x_shifted_14;
+                        z_stage_15 = z_stage_14 - 22'h0007F;
+                    end  
                 end
-                
-
-                // stage 4 //
-                if (d_15) begin
-                    x_stage_16 <= x_stage_15 + y_shifted_15;
-                    y_stage_16 <= y_stage_15 - x_shifted_15;
-                    z_stage_16 <= z_stage_15 + 22'h0003F;
+                if (counter == 2) begin
+                    if (d_3) begin
+                        x_stage_4 = x_stage_3 + y_shifted_3;
+                        y_stage_4 = y_stage_3 - x_shifted_3;
+                        z_stage_4 = z_stage_3 + 22'h3EB6E;
+                    end
+                    else begin
+                        x_stage_4 = x_stage_3 - y_shifted_3;
+                        y_stage_4 = y_stage_3 + x_shifted_3;
+                        z_stage_4 = z_stage_3 - 22'h3EB6E;
+                    end
+                    //
+                    if (d_7) begin
+                        x_stage_8 = x_stage_7 + y_shifted_7;
+                        y_stage_8 = y_stage_7 - x_shifted_7;
+                        z_stage_8 = z_stage_7 + 22'h03FFE;
+                    end
+                    else begin
+                        x_stage_8 = x_stage_7 - y_shifted_7;
+                        y_stage_8 = y_stage_7 + x_shifted_7;
+                        z_stage_8 = z_stage_7 - 22'h03FFE;
+                    end
+                    //
+                    if (d_11) begin
+                        x_stage_12 = x_stage_11 + y_shifted_11;
+                        y_stage_12 = y_stage_11 - x_shifted_11;
+                        z_stage_12 = z_stage_11 + 22'h003FF;
+                    end
+                    else begin
+                        x_stage_12 = x_stage_11 - y_shifted_11;
+                        y_stage_12 = y_stage_11 + x_shifted_11;
+                        z_stage_12 = z_stage_11 - 22'h003FF;
+                    end
+                    //
+                    if (d_15) begin
+                        x_stage_16 = x_stage_15 + y_shifted_15;
+                        y_stage_16 = y_stage_15 - x_shifted_15;
+                        z_stage_16 = z_stage_15 + 22'h0003F;
+                    end
+                    else begin
+                        x_stage_16 = x_stage_15 - y_shifted_15;
+                        y_stage_16 = y_stage_15 + x_shifted_15;
+                        z_stage_16 = z_stage_15 - 22'h0003F;
+                    end
+                end 
+                if (counter == 3) begin
+                    if (d_4) begin
+                        x_stage_5 = x_stage_4 + y_shifted_4;
+                        y_stage_5 = y_stage_4 - x_shifted_4;
+                        z_stage_5 = z_stage_4 + 22'h1FD5B;
+                    end
+                    else begin
+                        x_stage_5 = x_stage_4 - y_shifted_4;
+                        y_stage_5 = y_stage_4 + x_shifted_4;
+                        z_stage_5 = z_stage_4 - 22'h1FD5B;
+                    end
+                    //
+                    if (d_8) begin
+                        x_stage_9 = x_stage_8 + y_shifted_8;
+                        y_stage_9 = y_stage_8 - x_shifted_8;
+                        z_stage_9 = z_stage_8 + 22'h01FFF;
+                    end
+                    else begin
+                        x_stage_9 = x_stage_8 - y_shifted_8;
+                        y_stage_9 = y_stage_8 + x_shifted_8;
+                        z_stage_9 = z_stage_8 - 22'h01FFF;
+                    end
+                    //
+                    if (d_12) begin
+                        x_stage_13 = x_stage_12 + y_shifted_12;
+                        y_stage_13 = y_stage_12 - x_shifted_12;
+                        z_stage_13 = z_stage_12 + 22'h001FF;
+                    end
+                    else begin
+                        x_stage_13 = x_stage_12 - y_shifted_12;
+                        y_stage_13 = y_stage_12 + x_shifted_12;
+                        z_stage_13 = z_stage_12 - 22'h001FF;
+                    end
+                    //
+                    if (d_16) begin
+                        x_stage_17 = x_stage_16 + y_shifted_16;
+                        y_stage_17 = y_stage_16 - x_shifted_16;
+                        z_stage_17 = z_stage_16 + 22'h0001F;
+                    end
+                    else begin
+                        x_stage_17 = x_stage_16 - y_shifted_16;
+                        y_stage_17 = y_stage_16 + x_shifted_16;
+                        z_stage_17 = z_stage_16 - 22'h0001F;
+                    end    
                 end
-                else begin
-                    x_stage_16 <= x_stage_15 - y_shifted_15;
-                    y_stage_16 <= y_stage_15 + x_shifted_15;
-                    z_stage_16 <= z_stage_15 - 22'h0003F;
-                end
-                
-
-               
-
+                counter = counter + 1'b1;          
             end
             cos_out <= x_stage_17;
         end
