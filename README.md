@@ -30,5 +30,3 @@
 ### In Extra_Implementations folder there can be found additional special implementations of CORDIC as well as the regular top file. e.g. Pipelined CORDIC and multi-input modules.
 
 ![alt text](https://github.com/LudwigAJ/FPGA-FloatingPointArtithmetic/blob/main/Gallery/2_cordic_rolled_pipeline_full.png "16-iteration Pipelined CORDIC")
-
-###### None of this code nor data may by used, distributed, or sold without the consent of its owner. Me. But if you ask very nicely...
