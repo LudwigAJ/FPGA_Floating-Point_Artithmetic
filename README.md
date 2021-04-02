@@ -15,7 +15,7 @@
 ##### Note that converting Floating-Point to Fixed-Point and vice versa incurs precision loss.
 ***
 
-### All custom made Verilog modules could complete execution in 1 clock cycle using an Intel Altera 5CSEMA5F31C6N FPGA clocked @ 50 Mhz.
+### All custom made Verilog modules could complete execution in 1 clock cycle using an Intel Altera Cyclone V 5CSEMA5F31C6N FPGA clocked @ 50 Mhz.
 ##### Note that the CORDIC module was discovered to only be able to complete execution in 4 clock cycles or more in order to not violate timing on the FPGA.
 ***
 
