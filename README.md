@@ -22,6 +22,7 @@
 ![alt text](https://github.com/LudwigAJ/FPGA-FloatingPointArtithmetic/blob/main/Gallery/DE1-Board.png "The Board")
 
 #### Top file in main folder calculates 0.5 * X + X^2 * cos((X - 128) / 128) as a test of the overall function.
+#### It includes instances of 1 Adder module, 4 Multiplication modules, 1 Subtraction module, and 1 CORDIC Module. For the following ModelSim picture, the CORDIC is set at 4 iterations per clock cycle. 
 
 ![alt text](https://github.com/LudwigAJ/FPGA-FloatingPointArtithmetic/blob/main/Gallery/whole_function_cordic_unrolled_four_loop_fixed.png "ModelSim of top file")
 
